@@ -1,0 +1,11 @@
+﻿@model WebApplication.Models.Statistic.StatisticViewModel
+@{
+    ViewBag.Title = "PassedTest";
+}
+
+<h2>@ViewBag.Message</h2>
+
+Your results:
+@Html.DisplayFor(m => @Model.Time)
+@Html.DisplayFor(m => @Model.Date)
+@Html.DisplayFor(m => @Model.Percentage)

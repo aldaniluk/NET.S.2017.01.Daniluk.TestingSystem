@@ -1,30 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Domain.Abstract;
 using System.Web.Mvc;
+using WebApplication.Models.User;
+using WebApplication.Infrastructure.Mappers;
 
 namespace WebApplication.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IUserRepository userRepository;
+
+        public HomeController(IUserRepository userRepository)
+        {
+            this.userRepository = userRepository;
+        }
+
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult About()
+        //[Authorize]
+        public ActionResult MyProfile()
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
-        }
-
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            UserProfileViewModel user = userRepository.GetById(2).ToUserProfileViewModel();
+            return View(user);
         }
     }
 }

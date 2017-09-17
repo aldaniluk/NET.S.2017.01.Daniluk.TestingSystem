@@ -1,0 +1,67 @@
+﻿@model WebApplication.Models.Test.PassTestViewModel
+
+@{
+    ViewBag.Title = "PassTest";
+}
+
+<h2>PassTest</h2>
+
+<div id="timer">00:00:00</div>
+
+<div>
+    @using (Html.BeginForm("PassTest", "Test", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true)
+
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.BeginDate)
+        @Html.HiddenFor(model => model.MinPercentage)
+
+        for (int i = 0; i < Model.Questions.Count(); i++)
+        {
+
+            @Model.Questions.ElementAt(i).Text
+            <br />
+
+            foreach (var a in Model.Questions.ElementAt(i).Answers)
+            {
+                @Html.RadioButtonFor(model => model.UserAnswers[i], a.Id,
+               new { @class = "btn " + Model.Questions.ElementAt(i).Id })
+                @Html.DisplayFor(model => @a.Text)
+                @a.Img
+                <br />
+            }
+            <br />
+        }
+
+        <input type="submit" value="Готово" />
+    }
+</div>
+
+<script>
+    $(document).ready(function () {
+        //timer
+        var timer = document.getElementById("timer");
+        var h = 0;
+        var m = 0;
+        var s = 0;
+        startTimer();
+        function startTimer() {
+            s++;
+            if (s == 60) {
+                s = 0;
+                m++;
+                if (m == 60) {
+                    m = 0;
+                    h++;
+                }
+            }
+            timer.textContent = (h < 10 ? "0" : "") + h + ":" + (m < 10 ? "0" : "") + m + ":" + (s < 10 ? "0" : "") + s;
+            setTimeout(startTimer, 1000);
+        }
+    })
+
+
+</script>

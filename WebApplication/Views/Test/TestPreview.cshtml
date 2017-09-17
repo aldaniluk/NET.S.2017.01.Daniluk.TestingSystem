@@ -1,0 +1,42 @@
+﻿@model WebApplication.Models.Test.PreviewTestViewModel
+
+@{
+    ViewBag.Title = "TestPreview";
+}
+
+<h2>TestPreview</h2>
+
+<div>
+    @Html.DisplayNameFor(model => model.Name)
+
+    @Html.DisplayFor(model => model.Name)
+    <br />
+
+    @Html.DisplayNameFor(model => model.Description)
+
+    @Html.DisplayFor(model => model.Description)
+    <br />
+
+    @Html.DisplayNameFor(model => model.MinPercentage)
+
+    @Html.DisplayFor(model => model.MinPercentage)
+    <br />
+
+    @Html.DisplayNameFor(model => model.QuestionQuantity)
+
+    @Html.DisplayFor(model => model.QuestionQuantity)
+    <br />
+
+    @Html.DisplayNameFor(model => model.UsersQuantity)
+
+    @Html.DisplayFor(model => model.UsersQuantity)
+    <br />
+
+    @Html.DisplayNameFor(model => model.AveragePercentage)
+
+    @Html.DisplayFor(model => model.AveragePercentage)
+    <br /><br />
+
+</div>
+@ViewBag.Message
+@Html.ActionLink("Pass test!", "PassTest", "Test", new { id = Model.Id }, null)

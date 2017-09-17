@@ -1,0 +1,48 @@
+﻿@model WebApplication.Models.User.UserProfileViewModel
+@{
+    ViewBag.Title = "MyProfile";
+}
+
+<h2>@Model.Name</h2>
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => Model.Statistics.First().TestName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Statistics.First().Percentage)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Statistics.First().Date)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Statistics.First().Time)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => Model.Statistics.First().IsPassed)
+        </th>
+    </tr>
+
+    @foreach (var item in Model.Statistics)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPassed)
+            </td>
+        </tr>
+    }
+
+</table>
