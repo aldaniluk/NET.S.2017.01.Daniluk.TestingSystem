@@ -27,6 +27,11 @@ namespace Domain.Consrete
             return context.Set<Test>();
         }
 
+        public IEnumerable<Test> GetAllReady()
+        {
+            return context.Set<Test>().Where(t => t.IsReady == true);
+        }
+
         public void Create(Test entity)
         {
             context.Set<Test>().Add(entity);
@@ -38,14 +43,7 @@ namespace Domain.Consrete
             if (entity == null) return;
 
             Test testToUpdate = context.Set<Test>().FirstOrDefault(t => t.Id == entity.Id);
-            Test ormTest = entity;
-            context.Set<Test>().Attach(testToUpdate);
-            testToUpdate.Name = ormTest.Name;
-            testToUpdate.Description = ormTest.Description;
-            testToUpdate.MinPercentage = ormTest.MinPercentage;
-            testToUpdate.Questions = ormTest.Questions;
-            testToUpdate.Statistics = ormTest.Statistics;
-            context.Entry(testToUpdate).State = EntityState.Modified;
+            context.Entry(testToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
 
@@ -54,6 +52,16 @@ namespace Domain.Consrete
             Test test = context.Set<Test>().Single(t => t.Id == entity.Id);
             context.Set<Test>().Remove(test);
             context.SaveChanges();
+        }
+
+        public Test GetByName(string name)
+        {
+            return context.Set<Test>().Where(t => t.Name == name).FirstOrDefault();
+        }
+
+        public IEnumerable<Test> SearchByKeyWord(string keyWord)
+        {
+            return GetAllReady().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 
     }

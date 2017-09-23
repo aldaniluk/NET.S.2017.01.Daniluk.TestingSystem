@@ -36,14 +36,7 @@ namespace Domain.Consrete
             if (entity == null) return;
 
             Answer answerToUpdate = context.Set<Answer>().FirstOrDefault(a => a.Id == entity.Id);
-            Answer ormAnswer = entity;
-            context.Set<Answer>().Attach(answerToUpdate);
-            answerToUpdate.Text = ormAnswer.Text;
-            answerToUpdate.Img = ormAnswer.Img;
-            answerToUpdate.Explanation = ormAnswer.Explanation;
-            answerToUpdate.Right = ormAnswer.Right;
-            answerToUpdate.QuestionId = ormAnswer.QuestionId;
-            context.Entry(answerToUpdate).State = EntityState.Modified;
+            context.Entry(answerToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
 
@@ -53,16 +46,5 @@ namespace Domain.Consrete
             context.Set<Answer>().Remove(answer);
             context.SaveChanges();
         }
-
-        //public DalAnswer GetOneByPredicate(Expression<Func<DalAnswer, bool>> func)
-        //{
-        //    //?????????
-        //    return context.Set<Answer>().Select(a => a.ToDalAnswer()).FirstOrDefault(func);
-        //}
-
-        //public IEnumerable<DalAnswer> GetAllByPredicate(Expression<Func<DalAnswer, bool>> func)
-        //{
-        //    return context.Set<Answer>().Select(a => a.ToDalAnswer()).Where(func);
-        //}
     }
 }

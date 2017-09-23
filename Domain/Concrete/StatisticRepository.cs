@@ -17,11 +17,6 @@ namespace Domain.Consrete
             this.context = context;
         }
 
-        public Statistic GetById(int id)
-        {
-            throw new NotImplementedException();
-        }
-
         public IEnumerable<Statistic> GetByUserId(int id)
         {
             return context.Set<Statistic>().Where(s => s.UserId == id);
@@ -48,15 +43,7 @@ namespace Domain.Consrete
             if (entity == null) return;
 
             Statistic statisticToUpdate = context.Set<Statistic>().FirstOrDefault(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
-            Statistic ormStatistic = entity;
-            context.Set<Statistic>().Attach(statisticToUpdate);
-            statisticToUpdate.TestId = ormStatistic.TestId;
-            statisticToUpdate.UserId = ormStatistic.UserId;
-            statisticToUpdate.Date = ormStatistic.Date;
-            statisticToUpdate.Time = ormStatistic.Time;
-            statisticToUpdate.Percentage = ormStatistic.Percentage;
-            statisticToUpdate.IsPassed = ormStatistic.IsPassed;
-            context.Entry(statisticToUpdate).State = EntityState.Modified;
+            context.Entry(statisticToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
 
@@ -72,6 +59,23 @@ namespace Domain.Consrete
             return (context.Set<Statistic>().FirstOrDefault(s => s.TestId == testId && s.UserId == userId) == null) ? false : true;
         }
 
-
+        public IEnumerable<Statistic> FilterStatistic(int? testId, string sortType)
+        {
+            IEnumerable<Statistic> statictis;
+            statictis = (testId != null && testId != 0) ? GetByTestId((int)testId) : statictis = GetAll();
+            if (sortType == "Date")
+            {
+                statictis = statictis.OrderByDescending(s => s.Date);
+            }
+            else if (sortType == "Time")
+            {
+                statictis = statictis.OrderBy(s => s.Time);
+            }
+            else
+            {
+                statictis = statictis.OrderByDescending(s => s.Percentage);
+            }
+            return statictis;
+        }
     }
 }

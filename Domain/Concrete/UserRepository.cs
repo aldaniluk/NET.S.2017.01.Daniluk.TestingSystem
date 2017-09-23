@@ -38,13 +38,7 @@ namespace Domain.Consrete
             if (entity == null) return;
 
             User userToUpdate = context.Set<User>().FirstOrDefault(u => u.Id == entity.Id);
-            User ormUser = entity;
-            context.Set<User>().Attach(userToUpdate);
-            userToUpdate.Name = ormUser.Name;
-            userToUpdate.Login = ormUser.Login;
-            userToUpdate.Password = ormUser.Password;
-            userToUpdate.RoleId = ormUser.RoleId;
-            context.Entry(userToUpdate).State = EntityState.Modified;
+            context.Entry(userToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
 

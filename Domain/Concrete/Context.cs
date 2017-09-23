@@ -1,10 +1,9 @@
-namespace Domain.Consrete
+namespace Domain.Entities
 {
     using System;
     using System.Data.Entity;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
-    using Domain.Entities;
 
     public partial class Context : DbContext
     {
@@ -25,7 +24,7 @@ namespace Domain.Consrete
             modelBuilder.Entity<Question>()
                 .HasMany(e => e.Answers)
                 .WithRequired(e => e.Question)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
@@ -33,14 +32,19 @@ namespace Domain.Consrete
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Test>()
+                .HasMany(e => e.Questions)
+                .WithRequired(e => e.Test)
+                .WillCascadeOnDelete(true);
+
+            modelBuilder.Entity<Test>()
                 .HasMany(e => e.Statistics)
                 .WithRequired(e => e.Test)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
 
             modelBuilder.Entity<User>()
                 .HasMany(e => e.Statistics)
                 .WithRequired(e => e.User)
-                .WillCascadeOnDelete(false);
+                .WillCascadeOnDelete(true);
         }
     }
 }

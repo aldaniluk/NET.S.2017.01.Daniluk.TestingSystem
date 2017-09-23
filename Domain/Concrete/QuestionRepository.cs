@@ -38,13 +38,7 @@ namespace Domain.Consrete
             if (entity == null) return;
 
             Question questionToUpdate = context.Set<Question>().FirstOrDefault(q => q.Id == entity.Id);
-            Question ormQuestion = entity;
-            context.Set<Question>().Attach(questionToUpdate);
-            questionToUpdate.Text = ormQuestion.Text;
-            questionToUpdate.Img = ormQuestion.Img;
-            questionToUpdate.TestId = ormQuestion.TestId;
-            questionToUpdate.Answers = ormQuestion.Answers;
-            context.Entry(questionToUpdate).State = EntityState.Modified;
+            context.Entry(questionToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
 

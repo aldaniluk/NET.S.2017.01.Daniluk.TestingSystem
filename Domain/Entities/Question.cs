@@ -20,7 +20,7 @@ namespace Domain.Entities
 
         public byte[] Img { get; set; }
 
-        public int? TestId { get; set; }
+        public int TestId { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Answer> Answers { get; set; }
