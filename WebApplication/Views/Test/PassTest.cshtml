@@ -19,24 +19,29 @@
         @Html.HiddenFor(model => model.BeginDate)
         @Html.HiddenFor(model => model.MinPercentage)
 
-        for (int i = 0; i < Model.Questions.Count(); i++)
+        for(int i = 0; i < Model.Questions.Count(); i++)
         {
-
-            @Model.Questions.ElementAt(i).Text
+            @Model.Questions[i].Text
+            <br />
+            if (Model.Questions[i].Img != null)
+            {
+                <img width="300" height="200" src="@Url.Action("GetImage", "Question", new { id = @Model.Questions[i].Id })" />
+            }
             <br />
 
-            foreach (var a in Model.Questions.ElementAt(i).Answers)
+            foreach (var a in Model.Questions[i].Answers)
             {
                 @Html.RadioButtonFor(model => model.UserAnswers[i], a.Id,
-               new { @class = "btn " + Model.Questions.ElementAt(i).Id })
+               new { @class = "btn " + Model.Questions[i].Id })
+              
                 @Html.DisplayFor(model => @a.Text)
-                @a.Img
+               
                 <br />
             }
             <br />
         }
 
-        <input type="submit" value="Готово" />
+        <input type="submit" value="Готово" class="btn btn-success btn-lg"/>
     }
 </div>
 

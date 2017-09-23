@@ -1,6 +1,8 @@
 ﻿using Domain.Abstract;
 using Domain.Consrete;
+using Domain.Entities;
 using Ninject;
+using Ninject.Web.Common;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -32,7 +34,7 @@ namespace WebApplication.Infrastructure
 
         public void Configure()
         {
-            kernel.Bind<DbContext>().To<Context>().InSingletonScope();
+            kernel.Bind<DbContext>().To<Context>().InRequestScope();
             kernel.Bind<ITestRepository>().To<TestRepository>();
             kernel.Bind<IQuestionRepository>().To<QuestionRepository>();
             kernel.Bind<IAnswerRepository>().To<AnswerRepository>();

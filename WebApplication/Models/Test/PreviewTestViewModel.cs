@@ -14,5 +14,6 @@ namespace WebApplication.Models.Test
         public int QuestionQuantity { get; set; }
         public int UsersQuantity { get; set; }
         public double AveragePercentage { get; set; }
+        public bool IsReady { get; set; }
     }
 }

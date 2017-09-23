@@ -160,12 +160,16 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuestionController.cs" />
     <Compile Include="Controllers\StatisticController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Attributes\ValidTestAttribute.cs" />
+    <Compile Include="Infrastructure\Binders\TestModelBinder.cs" />
     <Compile Include="Infrastructure\Mappers\AnswerMapper.cs" />
     <Compile Include="Infrastructure\Mappers\QuestionMapper.cs" />
     <Compile Include="Infrastructure\Mappers\StatisticMapper.cs" />
@@ -183,6 +187,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\TestingSystem.mdf" />
+    <Content Include="App_Data\TestingSystem_log.ldf">
+      <DependentUpon>TestingSystem.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -216,15 +223,31 @@
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_UserLayout.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Test\AllTests.cshtml" />
-    <Content Include="Views\Shared\_UnauthorizedLayout.cshtml" />
-    <Content Include="Views\Home\MyProfile.cshtml" />
+    <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Home\Profile.cshtml" />
     <Content Include="Views\Test\PassTest.cshtml" />
     <Content Include="Views\Test\PassedTest.cshtml" />
-    <Content Include="Views\Statistic\AllStatistics.cshtml" />
-    <Content Include="Views\Test\TestPreview.cshtml" />
+    <Content Include="Views\Statistic\Index.cshtml" />
+    <Content Include="Views\Test\Preview.cshtml" />
+    <Content Include="Views\Test\All.cshtml" />
+    <Content Include="Views\Shared\_Header.cshtml" />
+    <Content Include="Views\Test\CreateTest.cshtml" />
+    <Content Include="Views\Test\DetailsTest.cshtml" />
+    <Content Include="Views\Question\CreateQuestion.cshtml" />
+    <Content Include="Views\Question\DetailsQuestion.cshtml" />
+    <Content Include="Views\Test\EditTest.cshtml" />
+    <Content Include="Views\Test\DeleteTest.cshtml" />
+    <Content Include="Views\Question\EditQuestion.cshtml" />
+    <Content Include="Views\Question\DeleteQuestion.cshtml" />
+    <Content Include="Views\Answer\CreateAnswer.cshtml" />
+    <Content Include="Views\Answer\DetailsAnswer.cshtml" />
+    <Content Include="Views\Answer\EditAnswer.cshtml" />
+    <Content Include="Views\Answer\DeleteAnswer.cshtml" />
+    <Content Include="Views\Statistic\_Statistics.cshtml" />
+    <Content Include="Views\Test\NotReadyTest.cshtml" />
+    <Content Include="Views\Test\_Tests.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>

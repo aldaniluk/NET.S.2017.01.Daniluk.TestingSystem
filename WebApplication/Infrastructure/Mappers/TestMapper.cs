@@ -18,6 +18,8 @@ namespace WebApplication.Infrastructure.Mappers
                 Description = test.Description,
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
+                IsReady = test.IsReady,
+                Questions = test.Questions?.Select(q => q.ToQuestionViewModel()).ToList()
             };
         }
 
@@ -32,7 +34,8 @@ namespace WebApplication.Infrastructure.Mappers
                 MinPercentage = test.MinPercentage,
                 Questions = test.Questions.Select(q => q.ToQuestionViewModel()).ToList(),
                 UserAnswers = new int[test.Questions.Count()],
-                BeginDate = DateTime.Now
+                BeginDate = DateTime.Now,
+                IsReady = test.IsReady
             };
         }
 
@@ -46,9 +49,24 @@ namespace WebApplication.Infrastructure.Mappers
                 Description = test.Description,
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
-                AveragePercentage = statistics.Sum(s => s.Percentage) / statistics.Count(),
+                AveragePercentage = Math.Round(statistics.Sum(s => s.Percentage) / statistics.Count(), 2),
                 QuestionQuantity = test.Questions.Count(),
-                UsersQuantity = statistics.Count()
+                UsersQuantity = statistics.Count(),
+                IsReady = test.IsReady
+            };
+        }
+
+        public static Test ToTest(this TestViewModel test)
+        {
+            if (test == null) return null;
+            return new Test
+            {
+                Id = test.Id,
+                Description = test.Description,
+                Name = test.Name,
+                MinPercentage = test.MinPercentage,
+                IsReady = test.IsReady,
+                Questions = test.Questions?.Select(q => q.ToQuestion()).ToList()
             };
         }
     }

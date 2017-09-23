@@ -19,8 +19,7 @@ namespace WebApplication.Controllers
             return View();
         }
 
-        //[Authorize]
-        public ActionResult MyProfile()
+        public ActionResult Profile()
         {
             UserProfileViewModel user = userRepository.GetById(2).ToUserProfileViewModel();
             return View(user);

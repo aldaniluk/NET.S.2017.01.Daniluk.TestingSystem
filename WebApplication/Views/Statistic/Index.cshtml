@@ -1,0 +1,74 @@
+﻿@model IEnumerable<WebApplication.Models.Statistic.StatisticViewModel>
+
+<br />
+
+@using (Ajax.BeginForm("FilterStatistic", "Statistic", 
+    new AjaxOptions { UpdateTargetId = "statistics", HttpMethod = "GET", InsertionMode = InsertionMode.Replace}))
+{ 
+    <div class="form-inline">
+        @Html.Label("Test:")
+        @Html.DropDownList("testId", ViewBag.Tests as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        @Html.Label("Type of sort:")
+        @Html.DropDownList("sortType", ViewBag.SortType as SelectList, htmlAttributes: new { @class = "form-control" })
+
+        <input type="submit" value="Filter" class="btn btn-default" />
+    </div>
+}
+    
+<br />
+
+<div id="statistics">
+    @Html.Partial("~/Views/Statistic/_Statistics.cshtml", Model)
+</div>
+
+    
+
+
+@*<table class="table">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].UserName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].TestName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].Time)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].Percentage)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Statistics[0].IsPassed)
+            </th>
+            <th></th>
+        </tr>
+
+    @foreach (var item in Model.Statistics) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Time)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Percentage)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsPassed)
+            </td>
+        </tr>
+    }
+
+    </table>*@

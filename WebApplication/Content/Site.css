@@ -22,3 +22,14 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/*--------TEST--------*/
+.not_ready_test {
+    text-align: center;
+    padding: 15% 0;
+}
+
+.test_preview {
+    
+}
+/*--------//TEST--------*/

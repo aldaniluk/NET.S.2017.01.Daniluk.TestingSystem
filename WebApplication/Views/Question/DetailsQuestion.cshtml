@@ -1,0 +1,48 @@
+﻿@model WebApplication.Models.Question.QuestionViewModel
+
+<br />
+@Html.ActionLink("Go to test", "Details", "Test", new { id = Model.TestId }, new { @class = "btn btn-default" })
+<br />
+
+<div id="question_@Model.Id">
+    <h4>Question:</h4>
+    @Html.HiddenFor(model => model.Id)
+
+    @Html.DisplayFor(model => model.Text)
+    <br />
+
+    @if (Model.Img != null)
+    {
+        <img width="350" height="200" src="@Url.Action("GetImage", "Question", new { id = Model.Id })" />
+    }
+
+</div>
+
+<p>
+    @Html.ActionLink("Edit question", "Edit", "Question", new { id = Model.Id }, null) |
+    @Html.ActionLink("Delete question", "Delete", "Question", new { id = Model.Id }, null)
+    <h4>Answers:</h4>
+    @Html.ActionLink("Create answer", "Create", "Answer", new { questionId = Model.Id, testId = Model.TestId }, null) 
+</p>
+
+<div id="answers">
+    @if (Model.Answers != null)
+    {
+        foreach (var item in Model.Answers)
+        {
+            
+            @Html.DisplayFor(i => item.Right) 
+            @Html.DisplayFor(i => item.Text)
+            <br />
+
+            @Html.ActionLink("Details", "Details", "Answer", new { id = item.Id }, null) @:|
+            @Html.ActionLink("Edit", "Edit", "Answer", new { id = item.Id }, null) @:|
+            @Html.ActionLink("Delete", "Delete", "Answer", new { id = item.Id }, null)
+            <br /><br />
+        }
+    }
+</div>
+
+
+
+

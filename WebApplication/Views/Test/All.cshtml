@@ -1,11 +1,14 @@
-﻿@model IEnumerable<WebApplication.Models.Test.PreviewTestViewModel>
+﻿@model IEnumerable<WebApplication.Models.Test.TestViewModel>
 
 @{
-    ViewBag.Title = "AllTests";
+    ViewBag.Title = "AllTestsCrud";
 }
 
-<h2>All tests</h2>
+<h2>AllTestsCrud</h2>
 
+<p>
+    @Html.ActionLink("Create new test", "Create", "Test")
+</p>
 <table class="table">
     <tr>
         <th>
@@ -18,7 +21,7 @@
             @Html.DisplayNameFor(model => model.MinPercentage)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.QuestionQuantity)
+            @Html.DisplayNameFor(model => model.IsReady)
         </th>
         <th></th>
     </tr>
@@ -26,8 +29,7 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.ActionLink(item.Name, "TestPreview", "Test", new { id = item.Id }, null)
-            @*@Html.DisplayFor(modelItem => item.Name)*@
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.Description)
@@ -36,7 +38,12 @@
             @Html.DisplayFor(modelItem => item.MinPercentage)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.QuestionQuantity)
+            @Html.DisplayFor(modelItem => item.IsReady)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", "Test", new { id=item.Id }, null) |
+            @Html.ActionLink("Details", "Details", "Test", new { id=item.Id }, null) |
+            @Html.ActionLink("Delete", "Delete", "Test", new { id=item.Id }, null)
         </td>
     </tr>
 }

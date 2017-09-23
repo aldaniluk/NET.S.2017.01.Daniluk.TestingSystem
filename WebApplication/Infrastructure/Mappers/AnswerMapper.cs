@@ -17,5 +17,18 @@ namespace WebApplication.Infrastructure.Mappers
                 Right = answer.Right
             };
         }
+
+        public static Answer ToAnswer(this AnswerViewModel answer)
+        {
+            return new Answer
+            {
+                Id = answer.Id,
+                Explanation = answer.Explanation,
+                Text = answer.Text,
+                Img = answer.Img,
+                QuestionId = answer.QuestionId,
+                Right = answer.Right
+            };
+        }
     }
 }

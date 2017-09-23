@@ -14,7 +14,19 @@ namespace WebApplication.Infrastructure.Mappers
                 Img = question.Img,
                 Text = question.Text,
                 TestId = question.TestId,
-                Answers = question.Answers.Select(a => a.ToAnswerViewModel()).ToList()
+                Answers = question.Answers?.Select(a => a.ToAnswerViewModel()).ToList()
+            };
+        }
+
+        public static Question ToQuestion(this QuestionViewModel question)
+        {
+            return new Question
+            {
+                Id = question.Id,
+                Img = question.Img,
+                Text = question.Text,
+                TestId = question.TestId,
+                Answers = question.Answers?.Select(a => a.ToAnswer()).ToList()
             };
         }
     }

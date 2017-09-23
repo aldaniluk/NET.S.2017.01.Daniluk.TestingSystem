@@ -28,7 +28,8 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.TestName)
+                @Html.ActionLink(item.TestName, "Preview", "Test", new { id = item.TestId }, null)
+                @*@Html.DisplayFor(modelItem => item.TestName)*@
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Percentage)

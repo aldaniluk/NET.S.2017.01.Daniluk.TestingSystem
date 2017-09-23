@@ -1,0 +1,23 @@
+﻿@model WebApplication.Models.Question.QuestionViewModel
+
+<h2>Create a question:</h2>
+<br />
+
+@using (Html.BeginForm("Create", "Question", null, FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <input type="hidden" name="testId" value="@ViewBag.TestId">
+
+    @Html.LabelFor(model => model.Text, new { @class = "col-md-2" })
+    @Html.TextAreaFor(model => model.Text, new { @class = "form-control" })
+    <br />
+
+    @Html.LabelFor(model => model.Img, new { @class = "col-md-2" })
+    <input type="file" name="file" id="file" />
+    <br />
+
+    <input type="submit" value="Create question" class="col-md-offset-2 btn btn-default" />
+}
+
+@Scripts.Render("~/bundles/jqueryval")

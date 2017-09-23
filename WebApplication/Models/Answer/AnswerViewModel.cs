@@ -1,12 +1,23 @@
-﻿namespace WebApplication.Models.Answer
+﻿using System.ComponentModel;
+
+namespace WebApplication.Models.Answer
 {
     public class AnswerViewModel
     {
         public int Id { get; set; }
+
+        [DisplayName("Answer text")]
         public string Text { get; set; }
+
+        [DisplayName("Answer image")]
         public byte[] Img { get; set; }
+
+        [DisplayName("Is answer right")]
         public bool Right { get; set; }
+
+        [DisplayName("Answer explantion")]
         public string Explanation { get; set; }
+
         public int QuestionId { get; set; }
     }
 }
