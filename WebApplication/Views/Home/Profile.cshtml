@@ -1,49 +1,68 @@
 ﻿@model WebApplication.Models.User.UserProfileViewModel
-@{
-    ViewBag.Title = "MyProfile";
-}
 
-<h2>@Model.Name</h2>
+<div class="profile_header">
+    <h1>@Model.Name</h1>
 
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => Model.Statistics.First().TestName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => Model.Statistics.First().Percentage)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => Model.Statistics.First().Date)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => Model.Statistics.First().Time)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => Model.Statistics.First().IsPassed)
-        </th>
-    </tr>
-
-    @foreach (var item in Model.Statistics)
+    @Html.ActionLink("Log off", "LogOff", "Account", null, null)
+</div>
+<div class="profile_tests">
+    @if (User.IsInRole("user"))
     {
-        <tr>
-            <td>
-                @Html.ActionLink(item.TestName, "Preview", "Test", new { id = item.TestId }, null)
-                @*@Html.DisplayFor(modelItem => item.TestName)*@
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Percentage)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Time)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IsPassed)
-            </td>
-        </tr>
+        if (Model.Statistics == null || Model.Statistics?.Count == 0)
+        {
+            <div class="profile_tests__didnt_pass">
+                <h2>You didn't pass any tests yet. Let's go!</h2>
+                @Html.ActionLink("Choose test", "Index", "Test", null, new { @class = "btn btn-default btn-lg" })
+            </div>
+        }
+        else
+        {
+            <table class="table">
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Statistics[0].TestName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Statistics[0].Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Statistics[0].Time)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Statistics[0].Percentage)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Statistics[0].IsPassed)
+                    </th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.Statistics)
+                {
+                    <tr>
+                        <td>
+                            @Html.ActionLink(item.TestName, "Preview", "Test", new { id = item.TestId }, null)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Date)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Time)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Percentage)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.IsPassed)
+                        </td>
+                    </tr>
+                }
+            </table>
+        }
     }
-
-</table>
+    else
+    {
+        <div class="profile_tests__didnt_pass">
+            <h2>You are admin, you can't pass tests. Only moderation.</h2>
+        </div>
+    }
+</div>

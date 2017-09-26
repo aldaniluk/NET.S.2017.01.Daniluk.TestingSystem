@@ -21,30 +21,10 @@ namespace Domain.Entities
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Question>()
-                .HasMany(e => e.Answers)
-                .WithRequired(e => e.Question)
-                .WillCascadeOnDelete(true);
-
             modelBuilder.Entity<Role>()
                 .HasMany(e => e.Users)
-                .WithRequired(e => e.Role)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<Test>()
-                .HasMany(e => e.Questions)
-                .WithRequired(e => e.Test)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<Test>()
-                .HasMany(e => e.Statistics)
-                .WithRequired(e => e.Test)
-                .WillCascadeOnDelete(true);
-
-            modelBuilder.Entity<User>()
-                .HasMany(e => e.Statistics)
-                .WithRequired(e => e.User)
-                .WillCascadeOnDelete(true);
+                .WithMany(e => e.Roles)
+                .Map(m => m.ToTable("UsersToRoles").MapLeftKey("RoleId").MapRightKey("UserId"));
         }
     }
 }

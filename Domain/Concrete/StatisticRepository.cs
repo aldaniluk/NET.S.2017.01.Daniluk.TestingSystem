@@ -56,13 +56,13 @@ namespace Domain.Consrete
 
         public bool IsUserPassedTest(int userId, int testId)
         {
-            return (context.Set<Statistic>().FirstOrDefault(s => s.TestId == testId && s.UserId == userId) == null) ? false : true;
+            return (context.Set<Statistic>().FirstOrDefault(s => s.TestId == testId && s.UserId == userId) != null);
         }
 
         public IEnumerable<Statistic> FilterStatistic(int? testId, string sortType)
         {
             IEnumerable<Statistic> statictis;
-            statictis = (testId != null && testId != 0) ? GetByTestId((int)testId) : statictis = GetAll();
+            statictis = (testId != null && testId != 0) ? GetByTestId((int)testId) : GetAll();
             if (sortType == "Date")
             {
                 statictis = statictis.OrderByDescending(s => s.Date);

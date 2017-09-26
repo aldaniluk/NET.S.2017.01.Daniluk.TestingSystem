@@ -1,44 +1,39 @@
 ﻿@model WebApplication.Models.Test.PreviewTestViewModel
 
-@{
-    ViewBag.Title = "TestPreview";
-}
-
-<h2>TestPreview</h2>
-
 <div class="test_preview">
-    @Html.DisplayNameFor(model => model.Name)
+    <h1>@Html.DisplayFor(model => model.Name)</h1>
 
-    @Html.DisplayFor(model => model.Name)
-    <br />
+    <h3>@Html.DisplayFor(model => model.Description)</h3>
 
-    @Html.DisplayNameFor(model => model.Description)
+    <div class="test_preview__desc">
+        <h4>
+            @Html.DisplayNameFor(model => model.MinPercentage) -
+            @Html.DisplayFor(model => model.MinPercentage)%
+        </h4>
 
-    @Html.DisplayFor(model => model.Description)
-    <br />
+        <h4>
+            @Html.DisplayNameFor(model => model.QuestionQuantity) -
+            @Html.DisplayFor(model => model.QuestionQuantity)
+        </h4>
 
-    @Html.DisplayNameFor(model => model.MinPercentage)
+        <h4>
+            @Html.DisplayNameFor(model => model.UsersQuantity) -
+            @Html.DisplayFor(model => model.UsersQuantity)
+        </h4>
 
-    @Html.DisplayFor(model => model.MinPercentage)
-    <br />
+        <h4>
+            @Html.DisplayNameFor(model => model.AveragePercentage) -
+            @Html.DisplayFor(model => model.AveragePercentage)%
+        </h4>
+    </div>
 
-    @Html.DisplayNameFor(model => model.QuestionQuantity)
-
-    @Html.DisplayFor(model => model.QuestionQuantity)
-    <br />
-
-    @Html.DisplayNameFor(model => model.UsersQuantity)
-
-    @Html.DisplayFor(model => model.UsersQuantity)
-    <br />
-
-    @Html.DisplayNameFor(model => model.AveragePercentage)
-
-    @Html.DisplayFor(model => model.AveragePercentage)
-    <br /><br />
-
+    @if (User.IsInRole("user"))
+    {
+        @Html.ActionLink("Pass test!", "PassTest", "Test", new { id = Model.Id }, new { @class = "button test_preview__btn" })
+        <br /><br />
+        @ViewBag.Message
+    }
+    
+    
 </div>
 
-@Html.ActionLink("Pass test!", "PassTest", "Test", new { id = Model.Id }, new { @class = "btn btn-success btn-lg" })
-<br />
-@ViewBag.Message

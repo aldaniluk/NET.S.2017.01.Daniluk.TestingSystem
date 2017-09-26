@@ -59,9 +59,15 @@ namespace Domain.Consrete
             return context.Set<Test>().Where(t => t.Name == name).FirstOrDefault();
         }
 
-        public IEnumerable<Test> SearchByKeyWord(string keyWord)
+        public IEnumerable<Test> SearchAllTestsByKeyWord(string keyWord)
         {
-            return GetAllReady().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
+            // ????????? context.Set<Test>().Where(...) -> doesn't work, WHYYY
+            return GetAll().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
+        }
+
+        public IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord)
+        {
+            return context.Set<Test>().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 
     }

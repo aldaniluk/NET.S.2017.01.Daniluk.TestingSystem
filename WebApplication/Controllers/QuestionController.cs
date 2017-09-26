@@ -9,6 +9,7 @@ using System.IO;
 
 namespace WebApplication.Controllers
 {
+    [Authorize]
     public class QuestionController : Controller
     {
         private readonly IQuestionRepository questionRepository;
@@ -19,22 +20,22 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Create(int testId)
         {
             ViewBag.TestId = testId;
             return View("CreateQuestion");
         }
 
-        [ActionName("Create")]
         [HttpPost]
+        [ActionName("Create")]
+        [Authorize(Roles = "admin")]
         public ActionResult Created(QuestionViewModel question, HttpPostedFileBase file)
         {
             if (file != null && file?.ContentLength != 0)
             {
-                using (var binaryReader = new BinaryReader(file.InputStream))
-                {
-                    question.Img = binaryReader.ReadBytes(file.ContentLength);
-                }
+                question.Img = new byte[file.ContentLength];
+                file.InputStream.Read(question.Img, 0, file.ContentLength);
             }
             if (ModelState.IsValid)
             {
@@ -52,14 +53,16 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
             QuestionViewModel question = questionRepository.GetById(id).ToQuestionViewModel();
             return View("EditQuestion", question);
         }
 
-        [ActionName("Edit")]
         [HttpPost]
+        [ActionName("Edit")]
+        [Authorize(Roles = "admin")]
         public ActionResult Edited(QuestionViewModel question, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
@@ -78,14 +81,16 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
             QuestionViewModel question = questionRepository.GetById(id).ToQuestionViewModel();
             return View("DeleteQuestion", question);
         }
 
-        [ActionName("Delete")]
         [HttpPost]
+        [ActionName("Delete")]
+        [Authorize(Roles = "admin")]
         public ActionResult Deleted(QuestionViewModel question)
         {
             int testId = questionRepository.GetById(question.Id).TestId;

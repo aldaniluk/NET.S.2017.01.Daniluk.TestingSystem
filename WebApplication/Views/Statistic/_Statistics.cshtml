@@ -29,7 +29,8 @@
                 @Html.DisplayFor(modelItem => item.UserName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.TestName)
+                @*@Html.DisplayFor(modelItem => item.TestName)*@
+                @Html.ActionLink(item.TestName, "Preview", "Test", new { id = item.TestId }, null)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Date)

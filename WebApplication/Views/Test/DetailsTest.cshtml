@@ -1,82 +1,55 @@
 ﻿@model WebApplication.Models.Test.TestViewModel
 
-<div>
-    <dl class="dl-horizontal">
-        @Html.HiddenFor(model => model.Id)
+<div class="details_test">
+    <h1>
+        @Html.DisplayFor(model => model.Name)
+    </h1>
+    <h3>
+        @Html.DisplayFor(model => model.Description)
+        <br />
+        @Html.DisplayFor(model => model.MinPercentage)%
+    </h3>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.MinPercentage)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.MinPercentage)
-        </dd>
+    <p>
+        @Html.ActionLink("Edit test", "Edit", "Test", new { id = Model.Id }, new { @class="btn btn-default" }) 
+        @Html.ActionLink("Delete test", "Delete", "Test", new { id = Model.Id }, new { @class = "btn btn-default" })
+    </p>
+    <hr />
 
-        <dt></dt>
-    
-    </dl>
-</div>
-
-<p>
-    @*<div id="questionForm">
-            @Ajax.ActionLink("Create question", "Create", "Question", new { testId = Model.Id },
-        new AjaxOptions { UpdateTargetId = "questionForm", InsertionMode=InsertionMode.Replace, HttpMethod = "GET" })
-        </div>*@
-    @Html.ActionLink("Edit test", "Edit", "Test", new { id = Model.Id }, null) |
-    @Html.ActionLink("Delete test", "Delete", "Test", new { id = Model.Id }, null)
-    <h4>Questions:</h4>
-    @Html.ActionLink("Create question", "Create", "Question", new { testId = Model.Id }, null)
-</p>
-
-<div id="questions">
-    @if (Model.Questions != null)
-    {
-        foreach (var item in @Model.Questions)
+    <div id="questions">
+        @if (Model.Questions != null && Model.Questions?.Count != 0)
         {
-            //Html.RenderPartial("~/Views/Question/DetailsQuestion.cshtml", item);
-                
-            @Html.DisplayFor(i => item.Text) 
-            <br />
-            if (item.Img != null)
-            {
-            <img width="350" height="200" src="@Url.Action("GetImage", "Question", new { id = item.Id })" />
-            <br />
-            }
+            <h3>Questions:</h3>
+            @Html.ActionLink("Create question", "Create", "Question", new { testId = Model.Id }, new { @class = "btn btn-default" })
 
-            @Html.ActionLink("Details", "Details", "Question", new { id = item.Id }, null) @:|
-            @Html.ActionLink("Edit", "Edit", "Question", new { id = item.Id }, null) @:|
-            @Html.ActionLink("Delete", "Delete", "Question", new { id = item.Id }, null)   
-            <br /><br />
+            <div class="details_test__questions">
+                @foreach (var item in @Model.Questions)
+                {
+                <div class="details_test__question col-md-6">
+                    <div>
+                        @if (item.Img != null)
+                        {
+                            <img width="350" height="200" src="@Url.Action("GetImage", "Question", new { id = item.Id })" />
+                        }
+                        <h3>
+                            @Html.DisplayFor(i => item.Text)
+                        </h3>
+                        <br />
+
+                        @Html.ActionLink("Details", "Details", "Question", new { id = item.Id }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Edit", "Edit", "Question", new { id = item.Id }, new { @class = "btn btn-default" })
+                        @Html.ActionLink("Delete", "Delete", "Question", new { id = item.Id }, new { @class = "btn btn-default" })
+                    </div>
+                </div>
+                }
+            </div>
         }
-    }
+        else
+        {
+            <h3>Test hasn't any questions.</h3>
+            @Html.ActionLink("Create question", "Create", "Question", new { testId = Model.Id }, new { @class = "btn btn-default" })
+        }
+
+    </div>
+
 </div>
-
-
-
-
-
-@*<script>
-    $(document).ready(function () {
-        function onAjaxBegin() {
-            $("#questions").append();
-        }
-    })
-        
-</script>*@
-

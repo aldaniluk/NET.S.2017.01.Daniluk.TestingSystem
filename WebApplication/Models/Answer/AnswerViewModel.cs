@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebApplication.Models.Answer
 {
@@ -7,6 +8,7 @@ namespace WebApplication.Models.Answer
         public int Id { get; set; }
 
         [DisplayName("Answer text")]
+        [Required(ErrorMessage = "Text cannot be empty.")]
         public string Text { get; set; }
 
         [DisplayName("Answer image")]

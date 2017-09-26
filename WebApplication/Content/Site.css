@@ -1,6 +1,8 @@
 ﻿body {
     padding-top: 50px;
     padding-bottom: 20px;
+    background: #868a84;
+    color: black
 }
 
 /* Set padding to keep content from hitting the edges */
@@ -23,13 +25,394 @@ textarea {
     max-width: 280px;
 }
 
-/*--------TEST--------*/
-.not_ready_test {
-    text-align: center;
-    padding: 15% 0;
+.button {
+    background: rgba(0,0,0,0);
+    border: 2px solid black;
+    border-radius: 5px;
+    text-decoration: none;
+    color: black;
+    outline: none;
+}
+.button:hover {
+    background: rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: black;
 }
 
+/*--------MAIN PAGE--------*/
+.main_page {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(/Content/Img/5.jpg) no-repeat center top;
+    background-size: cover;
+}
+
+.main_page__header {
+    padding-top: 15%;
+    text-align: center;
+    font-size: 13px;
+    color: black;
+}
+.main_page__header > h1 {
+    font-size: 50px;
+}
+
+.mail_page__btns {
+    margin: 60px 0;
+}
+.main_page__btn {
+    font-size: 25px;
+    color: black;
+    margin-right: 5px;
+    padding: 10px 20px;
+}
+/*--------//MAIN PAGE--------*/
+
+/*--------TEST--------*/
+.not_ready_test {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(/Content/Img/5.jpg) no-repeat center top;
+    background-size: cover;
+    color: black;
+    text-align: center;
+    padding: 15% 0 15% 0;
+}
+.not_ready_test > h1 {
+    margin: 40px 0;
+}
+.not_ready_test__btn {
+    font-size: 25px;
+    padding: 10px 20px
+}
+
+.test_results {
+    text-align: center;
+    padding: 15%;
+}
+
+/*test index*/
+.search_by_keyword {
+    color: black;
+    padding: 23px 10px;
+    background: rgb(42, 92, 85);
+    font-size: 18px;
+}
+.search_by_keyword__btn {
+    padding: 4px 15px;
+}
+.search_by_keyword__input{
+    padding: 4px 15px;
+}
+.search_by_keyword__input:hover {
+    background: rgba(0,0,0,0);
+}
+.create_test_btn {
+    padding: 6.5px 15px;
+}
+.all_tests {
+    background: white
+}
+/*test perview*/
 .test_preview {
-    
+    color: black;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(/Content/Img/5.jpg) no-repeat center top;
+    background-size: cover;
+    padding: 10% 15%;
+}
+.test_preview > h1 {
+    font-size: 50px;
+}
+.test_preview__desc {
+    margin: 30px 0 50px 0;
+}
+.test_preview__btn {
+    font-size: 25px;
+    padding: 10px 20px;
+}
+
+/*create test*/
+.create_test__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+.create_test__header > h2 {
+    margin: 0
+}
+.create_test {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*details test*/
+.details_test {
+    padding: 15px 10px;
+    overflow: auto; 
+    background: white;
+}
+.details_test > h1 {
+    padding: 10px 0;
+    margin: 0
+}
+.details_test > h3 {
+    padding: 0;
+    margin:0;
+    margin-bottom: 10px;
+}
+.details_test__questions {
+    margin: 15px -5px;
+}
+.details_test__question {
+    padding: 5px;
+    background: #d2ddcc;
+    background-clip: content-box;
+}
+.details_test__question > div {
+    padding: 15px;
+}
+.details_test__question > div > h3 {
+    margin: 0
+}
+
+/*edit test*/
+.edit_test__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+.edit_test__header > h2{
+    margin: 0
+}
+.edit_test {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*delete test*/
+.delete_test__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+.delete_test__header > h2 {
+    margin: 0
+}
+.delete_test {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+.delete_test > h2 {
+    margin: 15px 0 20px 0;
 }
 /*--------//TEST--------*/
+
+/*--------QUESTION--------*/
+/*create quest*/
+.create_quest__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+.create_quest__header > h2 {
+    margin: 0
+}
+.create_quest {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*details quest*/
+.details_quest {
+    padding: 15px 10px;
+    overflow: auto;
+    background: white;
+}
+.details_quest > h1 {
+    padding: 0;
+    margin: 10px 0;
+}
+.details_quest__answers {
+    margin: 15px -5px;
+}
+.details_quest__answer {
+    padding: 5px;
+    background: #d2ddcc;
+    background-clip: content-box;
+}
+.details_quest__answer > div {
+    padding: 15px;
+}
+.details_quest__answer > div > h3 {
+    margin: 0
+}
+
+/*edit quest*/
+.edit_quest__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+
+.edit_quest__header > h2 {
+    margin: 0
+}
+
+.edit_quest {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*delete quest*/
+.delete_quest__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+
+.delete_quest__header > h2 {
+    margin: 0
+}
+
+.delete_quest {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.delete_quest > h2 {
+    margin: 15px 0 20px 0;
+}
+/*--------//QUESTION--------*/
+
+/*--------ANSWER--------*/
+/*create answer*/
+.create_answer__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+
+.create_answer__header > h2 {
+    margin: 0
+}
+
+.create_answer {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*details answer*/
+.details_answer {
+    padding: 15px 10px;
+    overflow: auto;
+    background: white;
+}
+
+.details_answer > h1 {
+    padding: 0;
+    margin: 10px 0;
+}
+
+/*edit answer*/
+.edit_answer__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+
+.edit_answer__header > h2 {
+    margin: 0
+}
+
+.edit_answer {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+/*delete answer*/
+.delete_answer__header {
+    background: rgb(42, 92, 85);
+    padding: 15px 10px;
+}
+
+.delete_answer__header > h2 {
+    margin: 0
+}
+
+.delete_answer {
+    padding: 20px 10px;
+    background: white;
+    overflow: auto;
+    overflow-x: hidden;
+}
+
+.delete_answer > h2 {
+    margin: 15px 0 20px 0;
+}
+/*--------//ANSWERS--------*/
+
+/*--------PROFILE--------*/
+.profile_header {
+    padding-top: 12px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    color: black;
+    overflow: auto;
+    background: rgb(42, 92, 85);
+}
+.profile_header__btn {
+    text-align: center;
+    padding: 5px 15px;
+}
+.profile_header > h1 {
+    margin: 0;
+    padding: 0;
+}
+.profile_tests{
+    margin:0;
+    background: white
+}
+.profile_tests__didnt_pass{
+    padding: 20px 10px 40px 10px;
+    text-align: center;
+}
+.profile_tests__didnt_pass > h2 {
+    margin: 30px;
+}
+/*--------//PROFILE--------*/
+
+/*--------STATISTIC--------*/
+.statistic_header {
+    color: black;
+    padding: 23px 10px;
+    background: rgb(42, 92, 85);
+    font-size: 18px;
+}
+.statistic_all {
+    padding-left: 20px;
+    background: white
+}
+.statistic_header__btn {
+    padding: 3.5px 15px;
+}
+/*--------//STATISTIC--------*/

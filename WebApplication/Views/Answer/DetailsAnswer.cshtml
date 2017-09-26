@@ -1,35 +1,19 @@
 ﻿@model WebApplication.Models.Answer.AnswerViewModel
-<div>
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Text)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Text)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Right)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Right)
-        </dd>
-    
-        <dt>
-            @Html.DisplayNameFor(model => model.Explanation)
-        </dt>
-    
-        <dd>
-            @Html.DisplayFor(model => model.Explanation)
-        </dd>
-    
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit answer", "Edit", "Answer", new { id = Model.Id }, null) |
-    @Html.ActionLink("Delete answer", "Delete", "Answer", new { id = Model.Id }, null)
-</p>
 
-@Html.ActionLink("Go to question", "Details", "Question", new { id = Model.QuestionId }, null)
+<div class="details_answer">
+
+    @Html.ActionLink("<< Go to question details", "Details", "Question", new { id = Model.QuestionId }, new { @class = "btn btn-default" })
+    <br /><br />
+
+    @Html.HiddenFor(model => model.Id)
+
+    <h1>
+        @Html.DisplayFor(model => model.Right)
+        @Html.DisplayFor(model => model.Text)
+    </h1>
+
+    <p>
+        @Html.ActionLink("Edit answer", "Edit", "Answer", new { id = Model.Id }, new { @class = "btn btn-default" }) 
+        @Html.ActionLink("Delete answer", "Delete", "Answer", new { id = Model.Id }, new { @class = "btn btn-default" })
+    </p>
+</div>

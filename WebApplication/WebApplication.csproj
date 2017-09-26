@@ -160,6 +160,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\NinjectWebCommon.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AnswerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\QuestionController.cs" />
@@ -182,8 +183,12 @@
     <Compile Include="Models\Test\PassTestViewModel.cs" />
     <Compile Include="Models\Test\PreviewTestViewModel.cs" />
     <Compile Include="Models\Test\TestViewModel.cs" />
+    <Compile Include="Models\User\LoginUserViewModel.cs" />
+    <Compile Include="Models\User\RegisterUserViewModel.cs" />
     <Compile Include="Models\User\UserProfileViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Providers\CustomMembershipProvider.cs" />
+    <Compile Include="Providers\CustomRoleProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\TestingSystem.mdf" />
@@ -231,7 +236,6 @@
     <Content Include="Views\Test\PassedTest.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\Test\Preview.cshtml" />
-    <Content Include="Views\Test\All.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Test\CreateTest.cshtml" />
     <Content Include="Views\Test\DetailsTest.cshtml" />
@@ -248,8 +252,12 @@
     <Content Include="Views\Statistic\_Statistics.cshtml" />
     <Content Include="Views\Test\NotReadyTest.cshtml" />
     <Content Include="Views\Test\_Tests.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Img\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
   </ItemGroup>

@@ -6,8 +6,9 @@ namespace Domain.Abstract
     public interface ITestRepository : IRepository<Test>
     {
         Test GetById(int id);
-        IEnumerable<Test> GetAllReady();
         Test GetByName(string name);
-        IEnumerable<Test> SearchByKeyWord(string keyWord);
+        IEnumerable<Test> GetAllReady();
+        IEnumerable<Test> SearchAllTestsByKeyWord(string keyWord);
+        IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord); 
     }
 }

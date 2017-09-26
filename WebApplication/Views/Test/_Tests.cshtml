@@ -5,7 +5,7 @@
         <th>
             @Html.DisplayNameFor(model => model.Name)
         </th>
-        <th>
+        <th width="400">
             @Html.DisplayNameFor(model => model.Description)
         </th>
         <th>
@@ -14,6 +14,13 @@
         <th>
             @Html.DisplayNameFor(model => model.QuestionQuantity)
         </th>
+        @if (User.IsInRole("admin"))
+        {
+            <th>
+                @Html.DisplayNameFor(model => model.IsReady)
+            </th>
+            <th></th>
+        }
     </tr>
 
     @foreach (var item in Model)
@@ -32,6 +39,17 @@
             <td>
                 @Html.DisplayFor(modelItem => item.QuestionQuantity)
             </td>
+            @if (User.IsInRole("admin"))
+            {
+                <td>
+                    @Html.DisplayFor(modelItem => item.IsReady)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", "Test", new { id = item.Id }, null) |
+                    @Html.ActionLink("Details", "Details", "Test", new { id = item.Id }, null) |
+                    @Html.ActionLink("Delete", "Delete", "Test", new { id = item.Id }, null)
+                </td>
+            }
         </tr>
     }
 

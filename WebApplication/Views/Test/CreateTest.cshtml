@@ -1,93 +1,48 @@
 ﻿@model WebApplication.Models.Test.TestViewModel
 
-<h2>Create new test!</h2>
+<div class="create_test__header">
+    <h2>New test</h2>
+</div>
 
-@using (Html.BeginForm("Create", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
-{
-    @Html.AntiForgeryToken()
+<div class="create_test">
+    @using (Html.BeginForm("Create", "Test", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        @Html.AntiForgeryToken()
 
-    <div class="form-horizontal">
-        @Html.ValidationSummary(true)
-        
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        <div class="form-horizontal">
+            @Html.ValidationSummary(true)
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Name, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.MinPercentage, new { @class = "col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.MinPercentage, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.MinPercentage, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-default" />
+                </div>
             </div>
         </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Description, new { @class = "col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MinPercentage, new { @class = "col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MinPercentage, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MinPercentage, "", new { @class = "text-danger" })
-            </div>
-        </div>
-    </div>
-
-    
-    @*<div id="questions">
-        <a class="addQuestion">Add question</a>
-    </div>*@
-    
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
-        </div>
-    </div>
- }
-
-@section scripts
-{
-    @Scripts.Render("~/bundles/jqueryval")
-
-    <script>
-        $(function () {
-            var answerCount = 0;
-            var questionCount = 0;
-
-            //$('.addAnswer_'+questionCount).click(function () {
-            //    var questionClass = $(this).attr("class").split(' ')[1];
-            //    $.ajax({
-            //        method: "GET",
-            //        url: '/Answer/Create',
-            //        data: {
-            //            answerId: answerCount,
-            //            questionId: questionCount
-            //        },
-            //        success: function (data) {
-            //            $("." + questionClass).before(data);
-            //        }
-            //    });
-            //    answerCount++;
-            //});
-
-            $('.addQuestion').click(function () {
-                $.ajax({
-                    method: "GET",
-                    url: '/Question/Create',
-                    data: {
-                        questionId: questionCount
-                    },
-                    success: function (data) {
-                        //var html2Add = "<div class=\"answers\"><a class=\"addAnswer addAnswer_" + questionCount + "\">Add answer</a></div>";
-
-                        $('.addQuestion').before(data);
-                        //$("#questions").before(html2Add);
-                        //console.log(html2Add);
-                    }
-                });
-                questionCount++;
-            });
-        })
-    </script>
-}
+    }
+</div>

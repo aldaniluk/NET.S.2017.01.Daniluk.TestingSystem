@@ -14,7 +14,7 @@ namespace WebApplication.Models.Test
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Name cannot be empty.")]
-        [StringLength(50, MinimumLength = 3)]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Test name must be greater than 3 characters and less than 50.")]
         [DisplayName("Test name")]
         public string Name { get; set; }
 
@@ -27,10 +27,9 @@ namespace WebApplication.Models.Test
         [DisplayName("Minimal percentage")]
         public double MinPercentage { get; set; }
 
-        //[Remote("ValidateTest", "Test")]
+        [DisplayName("Is this test ready?")]
         public bool IsReady { get; set; }
 
-        //[Required]
         public List<QuestionViewModel> Questions { get; set; }
 
     }

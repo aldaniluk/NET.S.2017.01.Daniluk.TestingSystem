@@ -1,11 +1,10 @@
 ﻿@model WebApplication.Models.Statistic.StatisticViewModel
-@{
-    ViewBag.Title = "PassedTest";
-}
 
-<h2>@ViewBag.Message</h2>
-
-Your results:
-@Html.DisplayFor(m => @Model.Time)
-@Html.DisplayFor(m => @Model.Date)
-@Html.DisplayFor(m => @Model.Percentage)
+<div class="test_results">
+    <h2>@ViewBag.Message</h2>
+    <h4>
+        You passed the test in @Html.DisplayFor(m => @Model.Time) and scored @Html.DisplayFor(m => @Model.Percentage)%!
+    </h4>
+    <br />
+    @Html.ActionLink("Another tests", "Index", "Test", null, new { @class = "btn btn-success btn-lg" })
+</div>

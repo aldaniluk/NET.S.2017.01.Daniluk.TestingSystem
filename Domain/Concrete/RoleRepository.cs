@@ -22,6 +22,11 @@ namespace Domain.Consrete
             return context.Set<Role>().FirstOrDefault(r => r.Id == id);
         }
 
+        public IEnumerable<Role> GetByName(string name)
+        {
+            return context.Set<Role>().Where(r => r.Name == name);
+        }
+
         public IEnumerable<Role> GetAll()
         {
             return context.Set<Role>().AsEnumerable();

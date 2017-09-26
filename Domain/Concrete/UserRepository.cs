@@ -22,6 +22,11 @@ namespace Domain.Consrete
             return context.Set<User>().FirstOrDefault(r => r.Id == id);
         }
 
+        public User GetByLogin(string login)
+        {
+            return context.Set<User>().FirstOrDefault(r => r.Login == login);
+        }
+
         public IEnumerable<User> GetAll()
         {
             return context.Set<User>();

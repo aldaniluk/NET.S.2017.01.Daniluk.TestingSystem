@@ -7,6 +7,6 @@ namespace WebApplication.Models.User
     {
         public string Name { get; set; }
         public string Login { get; set; }
-        public ICollection<StatisticViewModel> Statistics { get; set; }
+        public List<StatisticViewModel> Statistics { get; set; }
     }
 }

@@ -1,10 +1,24 @@
-﻿@{
-    ViewBag.Title = "Home Page";
-}
-
-<div class="jumbotron">
-    <h1>Hello!</h1>
-    <p class="lead">It's geographic interactive application! Learn geography and enjoy!</p>
-    <a href="https://asp.net" class="btn btn-primary btn-lg">Authorisation &raquo;</a>
-    <a href="https://asp.net" class="btn btn-primary btn-lg">Registration &raquo;</a>
+﻿<div class="main_page">
+    <div class="container main_page__header">
+        @if (User.Identity.IsAuthenticated)
+        {
+            <h1>Hello, @User.Identity.Name</h1>
+        }
+        else
+        {
+            <h1>Hello</h1>
+        }
+        <h3>It's geographic interactive application! Learn geography and enjoy!</h3>
+        <div class="mail_page__btns">
+            @if (!User.Identity.IsAuthenticated)
+            {
+                @Html.ActionLink("Log in", "Login", "Account", null, new { @class = "col-lg-offset-4 col-lg-2 button main_page__btn" })
+                @Html.ActionLink("Register", "Register", "Account", null, new { @class = "col-lg-2 button main_page__btn" })
+            }
+            else
+            {
+                @Html.ActionLink("Go to tests", "Index", "Test", null, new { @class = "button main_page__btn" })
+            }
+        </div>
+    </div>
 </div>

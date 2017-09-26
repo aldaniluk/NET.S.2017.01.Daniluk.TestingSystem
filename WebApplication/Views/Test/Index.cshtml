@@ -1,21 +1,23 @@
 ﻿@model IEnumerable<WebApplication.Models.Test.PreviewTestViewModel>
 
-<br />
-
 @using (Ajax.BeginForm("SearchTest", "Test",
-                new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }))
+new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }))
 {
-    <div class="form-inline">
-        @*@Html.Editor("Name of test:", "testName", new { htmlAttributes = new { @class = "form-control" } })*@
-        @Html.Label("Search by key word:")
+    <div class="form-inline search_by_keyword">
+        Search by key word:
+
         <input class="form-control" name="keyWord"/>
 
         <input type="submit" value="Search" class="btn btn-default" />
+
+        @if (User.IsInRole("admin"))
+        {
+            @Html.ActionLink("Create new test", "Create", "Test", null, new { @class = "btn btn-default" })
+        }
+
     </div>
 }
 
-<br />
-
-<div id="tests">
+<div id="tests" class="all_tests">
     @Html.Partial("~/Views/Test/_Tests.cshtml", Model)
 </div>
