@@ -13,6 +13,7 @@ namespace WebApplication.Models.Test
         public double MinPercentage { get; set; }
         public List<QuestionViewModel> Questions { get; set; }
         public int[] UserAnswers { get; set; }
+        public int[] UserAnswersViewModel { get; set; }
         public DateTime BeginDate { get; set; }
         public bool IsReady { get; set; }
     }

@@ -21,8 +21,6 @@ namespace WebApplication.Controllers
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
-            //var type = HttpContext.User.GetType();
-            //var iden = HttpContext.User.Identity.GetType();
             return View();
         }
 
@@ -73,15 +71,9 @@ namespace WebApplication.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterUserViewModel viewModel)
         {
-            //if (viewModel.Captcha != (string)Session[CaptchaImage.CaptchaValueKey])
-            //{
-            //    ModelState.AddModelError("Captcha", "Incorrect input.");
-            //    return View(viewModel);
-            //}
+            bool isUserExist = userRepository.IsUserExists(viewModel.Login);
 
-            var anyUser = userRepository.GetAll().Any(u => u.Login.Contains(viewModel.Login));
-
-            if (anyUser)
+            if (isUserExist)
             {
                 ModelState.AddModelError("", "User with this login already registered. Please, choose another.");
                 return View(viewModel);
@@ -105,36 +97,18 @@ namespace WebApplication.Controllers
             return View(viewModel);
         }
 
-        //В сессии создаем случайное число от 1111 до 9999.
-        //Создаем в ci объект CatchaImage
-        //Очищаем поток вывода
-        //Задаем header для mime-типа этого http-ответа будет "image/jpeg" т.е. картинка формата jpeg.
-        //Сохраняем bitmap в выходной поток с форматом ImageFormat.Jpeg
-        //Освобождаем ресурсы Bitmap
-        //Возвращаем null, так как основная информация уже передана в поток вывод
-        //[AllowAnonymous]
-        //public ActionResult Captcha()
-        //{
-        //    Session[CaptchaImage.CaptchaValueKey] =
-        //        new Random(DateTime.Now.Millisecond).Next(1111, 9999).ToString(CultureInfo.InvariantCulture);
-        //    var ci = new CaptchaImage(Session[CaptchaImage.CaptchaValueKey].ToString(), 211, 50, "Helvetica");
+        [AllowAnonymous]
+        public JsonResult ValidLogIn(string login)
+        {
+            bool isExist = userRepository.IsUserExists(login);
+            return Json(!isExist, JsonRequestBehavior.AllowGet);
+        }
 
-        //    // Change the response headers to output a JPEG image.
-        //    this.Response.Clear();
-        //    this.Response.ContentType = "image/jpeg";
-
-        //    // Write the image to the response stream in JPEG format.
-        //    ci.Image.Save(this.Response.OutputStream, ImageFormat.Jpeg);
-
-        //    // Dispose of the CAPTCHA image object.
-        //    ci.Dispose();
-        //    return null;
-        //}
-
-        //[ChildActionOnly]
-        //public ActionResult LoginPartial()
-        //{
-        //    return PartialView("_LoginPartial");
-        //}
+        [AllowAnonymous]
+        public JsonResult ValidLogUp(string login)
+        {
+            bool isExist = userRepository.IsUserExists(login);
+            return Json(isExist, JsonRequestBehavior.AllowGet);
+        }
     }
 }

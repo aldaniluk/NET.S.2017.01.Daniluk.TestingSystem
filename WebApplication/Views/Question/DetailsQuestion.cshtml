@@ -12,7 +12,7 @@
 
     @if (Model.Img != null)
     {
-        <img width="350" height="200" src="@Url.Action("GetImage", "Question", new { id = Model.Id })" />
+        @Html.Image(@Url.Action("GetImage", "Question", new { id = Model.Id }), 350, 200)
         <br /><br />
     }
 

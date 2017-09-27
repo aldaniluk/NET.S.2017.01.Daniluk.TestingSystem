@@ -38,6 +38,11 @@ textarea {
     text-decoration: none;
     color: black;
 }
+.button:focus {
+    background: rgba(0,0,0,0.1);
+    text-decoration: none;
+    color: black;
+}
 
 /*--------MAIN PAGE--------*/
 .main_page {
@@ -69,8 +74,39 @@ textarea {
     margin-right: 5px;
     padding: 10px 20px;
 }
-/*--------//MAIN PAGE--------*/
 
+/*login*/
+.login_header {
+    color: black;
+    padding: 23px 10px;
+    background: rgb(42, 92, 85);
+    font-size: 18px;
+}
+.login_header > h2 {
+    padding: 0;
+    margin: 0
+}
+.login {
+    background: white;
+    padding: 30px 10px 20px 10px;
+}
+
+/*register*/
+.register_header{
+    color: black;
+    padding: 23px 10px;
+    background: rgb(42, 92, 85);
+    font-size: 18px;
+}
+.register_header > h2{
+    padding: 0;
+    margin: 0
+}
+.register {
+    background: white;
+    padding: 30px 10px;
+}
+/*--------//MAIN PAGE--------*/
 /*--------TEST--------*/
 .not_ready_test {
     width: 100%;
@@ -82,7 +118,7 @@ textarea {
     background-size: cover;
     color: black;
     text-align: center;
-    padding: 15% 0 15% 0;
+    padding: 17% 0 15% 0;
 }
 .not_ready_test > h1 {
     margin: 40px 0;
@@ -92,9 +128,101 @@ textarea {
     padding: 10px 20px
 }
 
-.test_results {
+/*pass test*/
+.pass_test__header {
+    color: black;
+    padding: 23px 10px;
+    background: rgb(42, 92, 85);
+    font-size: 18px;
+}
+.pass_test__header > h1 {
+    margin: 0;
+    padding: 0
+}
+.pass_test{
+    padding: 20px 10px;
+    background: white
+}
+.timer {
+    font-size: 30px
+}
+.pass_test__questions {
+    margin: 10px -5px;
+    overflow: auto;
+    overflow-x: hidden
+}
+.pass_test__questions__btn {
+    overflow: auto;
     text-align: center;
-    padding: 15%;
+}
+.pass_test__questions__btn > input {
+    font-size: 18px;
+}
+.pass_test__question {
+    padding: 5px;
+    background: #d2ddcc;
+    background-clip: content-box;
+}
+.pass_test__question > div {
+    margin: 10px;
+}
+.pass_test__question > div > h2 {
+    margin: 0;
+    padding: 0
+}
+.pass_test__question__answers{
+    margin: 10px 0;
+    overflow: auto;
+    overflow: auto
+}
+.pass_test__question__answer {
+    display: inline-block;
+    padding: 0;
+    font-size: 18px;
+}
+.radiobtn {
+    float: left;
+    /*margin-top: -4px;*/
+    padding: 0;
+}
+.answer {
+    padding: 0 5px;
+    float: left;
+}
+
+.correct {
+    color: green;
+}
+.wrong {
+    color: red;
+}
+.explanation {
+    font-size: 18px;
+    float: left
+}
+
+/*test result*/
+.test_results {
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(/Content/Img/5.jpg) no-repeat center top;
+    background-size: cover;
+    color: black;
+    text-align: center;
+    padding: 16% 0 15% 0;
+}
+.test_results__header {
+    overflow: auto;
+}
+.test_results__btns {
+    margin: 40px 0;
+}
+.test_results__btn {
+    font-size: 25px;
+    padding: 10px 20px;
 }
 
 /*test index*/
@@ -416,3 +544,23 @@ textarea {
     padding: 3.5px 15px;
 }
 /*--------//STATISTIC--------*/
+
+/*--------ERROR--------*/
+.error {
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    background: url(/Content/Img/5.jpg) no-repeat center top;
+    background-size: cover;
+    padding: 17% 15%;
+}
+.error > h1 {
+   
+}
+.error > h3 {
+   
+}
+/*--------//ERROR--------*/

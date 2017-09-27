@@ -1,32 +1,32 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.Web.Mvc;
 
 namespace WebApplication.Models.User
 {
     public class RegisterUserViewModel
     {
         [Display(Name = "Enter your login")]
-        [StringLength(50, ErrorMessage = "The field can not be empty!")]
+        [Required(ErrorMessage = "The field can not be empty!")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Login must be greater than 3 characters and least than 50.")]
+        [Remote("ValidLogIn", "Account", ErrorMessage = "This login is used. Please, select another.")]
         public string Login { get; set; }
 
         [Display(Name = "Enter your name")]
-        [StringLength(50, ErrorMessage = "The field can not be empty!")]
+        [Required(ErrorMessage = "The field can not be empty!")]
+        [StringLength(50, MinimumLength = 3, ErrorMessage = "Name must be greater than 3 characters and least than 50.")]
         public string Name { get; set; }
 
-        [Required(ErrorMessage = "Enter your password")]
-        [StringLength(50, ErrorMessage = "The password must contain at least {2} characters", MinimumLength = 6)]
-        [DataType(DataType.Password)]
         [Display(Name = "Enter your password")]
+        [Required(ErrorMessage = "Enter your password")]
+        [StringLength(50, MinimumLength = 6, ErrorMessage = "Password must be greater than 6 characters and least than 50.")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Required(ErrorMessage = "Confirm the password")]
-        [DataType(DataType.Password)]
         [Display(Name = "Confirm the password")]
-        [Compare("Password", ErrorMessage = "Passwords must match")]
+        [Required(ErrorMessage = "Confirm the password")]
+        [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Passwords must match")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
-
-        //[Required]
-        //[Display(Name = "Enter the code from the image")]
-        //public string Captcha { get; set; }
     }
 }

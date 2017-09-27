@@ -49,7 +49,8 @@ namespace Domain.Consrete
 
         public void Delete(Statistic entity)
         {
-            Statistic statistic = context.Set<Statistic>().Single(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
+            Statistic statistic = context.Set<Statistic>()
+                .Single(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
             context.Set<Statistic>().Remove(statistic);
             context.SaveChanges();
         }
@@ -59,21 +60,24 @@ namespace Domain.Consrete
             return (context.Set<Statistic>().FirstOrDefault(s => s.TestId == testId && s.UserId == userId) != null);
         }
 
-        public IEnumerable<Statistic> FilterStatistic(int? testId, string sortType)
+        public IEnumerable<Statistic> FilterStatistic(int? testId, StatisticSortType sortType)
         {
             IEnumerable<Statistic> statictis;
             statictis = (testId != null && testId != 0) ? GetByTestId((int)testId) : GetAll();
-            if (sortType == "Date")
+            switch (sortType)
             {
-                statictis = statictis.OrderByDescending(s => s.Date);
-            }
-            else if (sortType == "Time")
-            {
-                statictis = statictis.OrderBy(s => s.Time);
-            }
-            else
-            {
-                statictis = statictis.OrderByDescending(s => s.Percentage);
+                case StatisticSortType.Date:
+                    statictis = statictis.OrderByDescending(s => s.Date);
+                    break;
+
+                case StatisticSortType.Time:
+                    statictis = statictis.OrderBy(s => s.Time);
+                    break;
+
+                case StatisticSortType.Percentage:
+                default:
+                    statictis = statictis.OrderByDescending(s => s.Percentage);
+                    break;
             }
             return statictis;
         }

@@ -18,7 +18,8 @@ namespace WebApplication.Controllers
         private readonly IStatisticRepository statisticRepository;
         private readonly IUserRepository userRepository;
 
-        public TestController(ITestRepository testRepository, IQuestionRepository questionRepository, IAnswerRepository answerRepository, IStatisticRepository statisticRepository, IUserRepository userRepository)
+        public TestController(ITestRepository testRepository, IQuestionRepository questionRepository, 
+            IAnswerRepository answerRepository, IStatisticRepository statisticRepository, IUserRepository userRepository)
         {
             this.testRepository = testRepository;
             this.questionRepository = questionRepository;
@@ -54,7 +55,8 @@ namespace WebApplication.Controllers
             {
                 int userId = userRepository.GetByLogin(User.Identity.Name).Id;
                 if (statisticRepository.IsUserPassedTest(userId, id))
-                    message = "*Attention: you passed this test, but you can do this again. Your results in the statistics will change. Good luck!"; 
+                    message = "*Attention: you passed this test, but you can do this again. " +
+                        "Your results in the statistics will change. Good luck!"; 
             }
             ViewBag.Message = message;
             return View(test);
@@ -70,6 +72,12 @@ namespace WebApplication.Controllers
             return View(test);
         }
 
+        [HttpGet]
+        public bool IsAnswerTrue(int id)
+        {
+            return answerRepository.GetById(id).Right;
+        }
+
         [HttpPost]
         [Authorize(Roles = "user")]
         [ActionName("PassTest")]
@@ -81,6 +89,7 @@ namespace WebApplication.Controllers
             StatisticViewModel statistic = new StatisticViewModel
             {
                 TestId = passTestModel.Id,
+                TestName = passTestModel.Name,
                 UserId = userId,
                 Date = DateTime.Now,
                 Time = new TimeSpan(time.Hours, time.Minutes, time.Seconds),
@@ -91,10 +100,6 @@ namespace WebApplication.Controllers
                 statisticRepository.Update(statistic.ToStatistic());
             else
                 statisticRepository.Create(statistic.ToStatistic());
-            string message = statistic.IsPassed ? 
-                $"You passed successfully the test {passTestModel.Name}!" :
-                $"You didn't pass the test {passTestModel.Name}. But don't give up, try again!";
-            ViewBag.Message = message;
             return View("PassedTest", statistic);
         }
 
@@ -120,8 +125,7 @@ namespace WebApplication.Controllers
             else
             {
                 tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
-            }
-            
+            } 
             return PartialView("_Tests", tests);
         }
 

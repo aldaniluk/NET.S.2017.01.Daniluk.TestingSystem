@@ -1,10 +1,20 @@
 ﻿@model WebApplication.Models.Statistic.StatisticViewModel
 
 <div class="test_results">
-    <h2>@ViewBag.Message</h2>
-    <h4>
-        You passed the test in @Html.DisplayFor(m => @Model.Time) and scored @Html.DisplayFor(m => @Model.Percentage)%!
-    </h4>
-    <br />
-    @Html.ActionLink("Another tests", "Index", "Test", null, new { @class = "btn btn-success btn-lg" })
+    <div class="test_results__header">
+        @if (Model.IsPassed)
+        {
+            <h1>You passed successfully the test '@Model.TestName'!</h1>
+        }
+        else
+        {
+            <h1>You didn't pass the test '@Model.TestName'. But don't give up, try again!</h1>
+        }
+        <h3>
+            You passed the test in @Html.DisplayFor(m => @Model.Time) and scored @Html.DisplayFor(m => @Model.Percentage)%
+        </h3>
+    </div>
+    <div class="test_results__btns">
+        @Html.ActionLink("Another tests", "Index", "Test", null, new { @class = "button test_results__btn" })
+    </div>
 </div>

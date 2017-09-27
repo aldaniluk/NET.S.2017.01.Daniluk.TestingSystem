@@ -67,6 +67,7 @@
     <Compile Include="Entities\Question.cs" />
     <Compile Include="Entities\Role.cs" />
     <Compile Include="Entities\Statistic.cs" />
+    <Compile Include="Entities\StatisticSortType.cs" />
     <Compile Include="Entities\Test.cs" />
     <Compile Include="Entities\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -8,6 +8,6 @@ namespace Domain.Abstract
         bool IsUserPassedTest(int userId, int testId);
         IEnumerable<Statistic> GetByUserId(int id);
         IEnumerable<Statistic> GetByTestId(int id);
-        IEnumerable<Statistic> FilterStatistic(int? testId, string sortType);
+        IEnumerable<Statistic> FilterStatistic(int? testId, StatisticSortType sortType);
     }
 }

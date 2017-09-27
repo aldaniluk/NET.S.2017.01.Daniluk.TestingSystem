@@ -32,6 +32,11 @@ namespace Domain.Consrete
             return context.Set<User>();
         }
 
+        public bool IsUserExists(string login)
+        {
+            return context.Set<User>().FirstOrDefault(r => r.Login == login) != null;
+        }
+
         public void Create(User entity)
         {
             context.Set<User>().Add(entity);

@@ -61,13 +61,15 @@ namespace Domain.Consrete
 
         public IEnumerable<Test> SearchAllTestsByKeyWord(string keyWord)
         {
-            // ????????? context.Set<Test>().Where(...) -> doesn't work, WHYYY
-            return GetAll().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
+            //для ienumerable! а для iquerable ?
+            return GetAll().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || 
+                t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 
         public IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord)
         {
-            return context.Set<Test>().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || t.Description.ToLower().Contains(keyWord.ToLower()));
+            return GetAllReady().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || 
+                t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 
     }

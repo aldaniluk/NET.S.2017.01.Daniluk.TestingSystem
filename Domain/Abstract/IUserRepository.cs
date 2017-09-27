@@ -6,5 +6,6 @@ namespace Domain.Abstract
     {
         User GetById(int id);
         User GetByLogin(string login);
+        bool IsUserExists(string login);
     }
 }
