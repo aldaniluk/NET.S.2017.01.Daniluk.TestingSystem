@@ -28,7 +28,6 @@ namespace WebApplication.Controllers
             this.userRepository = userRepository;
         }
 
-        [HttpGet]
         [AllowAnonymous]
         public ActionResult Index()
         {
@@ -49,7 +48,9 @@ namespace WebApplication.Controllers
         {
             PreviewTestViewModel test = testRepository.GetById(id).ToPreviewTestViewModel();
             if (!test.IsReady)
+            {
                 return View("NotReadyTest");
+            }
             string message = "";
             if (User.Identity.IsAuthenticated)
             {
@@ -68,14 +69,10 @@ namespace WebApplication.Controllers
         {
             PassTestViewModel test = testRepository.GetById(id).ToPassTestViewModel();
             if (!test.IsReady)
+            {
                 return View("NotReadyTest");
+            }
             return View(test);
-        }
-
-        [HttpGet]
-        public bool IsAnswerTrue(int id)
-        {
-            return answerRepository.GetById(id).Right;
         }
 
         [HttpPost]
@@ -84,23 +81,36 @@ namespace WebApplication.Controllers
         public ActionResult PassedTest(PassTestViewModel passTestModel)
         {
             int userId = userRepository.GetByLogin(User.Identity.Name).Id;
+            passTestModel.UserId = userId;
+            PassTest(passTestModel);
+            return RedirectToAction("TestResult", "Test", new { userId = userId, testId = passTestModel.Id });
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult TestResult(int userId, int testId)
+        {
+            StatisticViewModel statistic = statisticRepository.GetStatistic(userId, testId).ToStatisticViewModel();
+            return View("TestResult", statistic);
+        }
+
+        #region BLL methods
+        private void PassTest(PassTestViewModel passTestModel)
+        {
             double percentage = CountPercentageOfRightAnswers(passTestModel.UserAnswers);
             TimeSpan time = DateTime.Now - passTestModel.BeginDate;
             StatisticViewModel statistic = new StatisticViewModel
             {
                 TestId = passTestModel.Id,
-                TestName = passTestModel.Name,
-                UserId = userId,
+                UserId = passTestModel.UserId,
                 Date = DateTime.Now,
                 Time = new TimeSpan(time.Hours, time.Minutes, time.Seconds),
                 Percentage = percentage,
                 IsPassed = (percentage >= passTestModel.MinPercentage)
             };
-            if (statisticRepository.IsUserPassedTest(userId, passTestModel.Id))
+            if (statisticRepository.IsUserPassedTest(passTestModel.UserId, passTestModel.Id))
                 statisticRepository.Update(statistic.ToStatistic());
             else
                 statisticRepository.Create(statistic.ToStatistic());
-            return View("PassedTest", statistic);
         }
 
         private double CountPercentageOfRightAnswers(int[] userAnswers)
@@ -113,6 +123,12 @@ namespace WebApplication.Controllers
                     rightAnswers++;
             }
             return Math.Round((double)rightAnswers / allAnswers * 100, 2);
+        }
+        #endregion
+
+        public bool IsAnswerTrue(int id) ////////////////////////
+        {
+            return answerRepository.GetById(id).Right;
         }
 
         public ActionResult SearchTest(string keyWord)
@@ -129,7 +145,7 @@ namespace WebApplication.Controllers
             return PartialView("_Tests", tests);
         }
 
-        //methods for admin
+        #region Methods for admin
         [HttpGet]
         [Authorize(Roles = "admin")]
         public ActionResult Create()
@@ -145,8 +161,8 @@ namespace WebApplication.Controllers
             if (ModelState.IsValid)
             {
                 testRepository.Create(test.ToTest());
-                TestViewModel testViewModel = testRepository.GetByName(test.Name).ToTestViewModel();
-                return View("DetailsTest", testViewModel);
+                int testId = testRepository.GetByName(test.Name).Id;
+                return RedirectToAction("Details", "Test", new { id = testId });
             }
             return View("Create");
         }
@@ -196,6 +212,7 @@ namespace WebApplication.Controllers
             TestViewModel test = testRepository.GetById(id).ToTestViewModel();
             return View("DetailsTest", test);
         }
+        #endregion
 
     }
 }

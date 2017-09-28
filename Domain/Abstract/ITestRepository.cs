@@ -1,4 +1,5 @@
 ﻿using Domain.Entities;
+using System;
 using System.Collections.Generic;
 
 namespace Domain.Abstract
@@ -9,6 +10,6 @@ namespace Domain.Abstract
         Test GetByName(string name);
         IEnumerable<Test> GetAllReady();
         IEnumerable<Test> SearchAllTestsByKeyWord(string keyWord);
-        IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord); 
+        IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord);
     }
 }

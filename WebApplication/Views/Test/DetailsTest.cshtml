@@ -8,6 +8,15 @@
         @Html.DisplayFor(model => model.Description)
         <br />
         @Html.DisplayFor(model => model.MinPercentage)%
+        <br />
+        @if (Model.IsReady)
+        {
+            @:>IS READY
+        }
+        else
+        {
+            @:>IS NOT READY
+        }
     </h3>
 
     <p>

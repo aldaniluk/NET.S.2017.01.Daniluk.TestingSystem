@@ -2,6 +2,7 @@
 
 namespace WebApplication.Controllers
 {
+    [AllowAnonymous]
     public class ErrorController : Controller
     {
         public ActionResult Oops()

@@ -105,6 +105,7 @@
                 method: "GET",
                 url: "/Test/IsAnswerTrue/" + answer,
                 success: function (data) {
+                    console.log(data);
                     if (data == "True") {
                         $("." + answer).addClass("correct");
                     }

@@ -1,11 +1,8 @@
 ﻿using Domain.Abstract;
-using System.Collections.Generic;
-using System.Linq;
 using System.Web.Mvc;
 using WebApplication.Models.Question;
 using WebApplication.Infrastructure.Mappers;
 using System.Web;
-using System.IO;
 
 namespace WebApplication.Controllers
 {
@@ -17,6 +14,13 @@ namespace WebApplication.Controllers
         public QuestionController(IQuestionRepository questionRepository)
         {
             this.questionRepository = questionRepository;
+        }
+
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            QuestionViewModel question = questionRepository.GetById(id).ToQuestionViewModel();
+            return View("DetailsQuestion", question);
         }
 
         [HttpGet]
@@ -46,13 +50,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        public ActionResult Details(int id)
-        {
-            QuestionViewModel question = questionRepository.GetById(id).ToQuestionViewModel();
-            return View("DetailsQuestion", question);
-        }
-
-        [HttpGet]
         [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
@@ -69,10 +66,8 @@ namespace WebApplication.Controllers
             {
                 if (file != null && file?.ContentLength != 0)
                 {
-                    using (var binaryReader = new BinaryReader(file.InputStream))
-                    {
-                        question.Img = binaryReader.ReadBytes(file.ContentLength);
-                    }
+                    question.Img = new byte[file.ContentLength];
+                    file.InputStream.Read(question.Img, 0, file.ContentLength);
                 }
                 questionRepository.Update(question.ToQuestion());
                 return RedirectToAction("Details", "Question", new { id = question.Id });
@@ -100,12 +95,12 @@ namespace WebApplication.Controllers
 
         public ActionResult GetImage(int id)
         {
-            byte[] imagedata = questionRepository.GetById(id).Img;
-            if (imagedata == null || imagedata?.Length == 0)
+            byte[] image = questionRepository.GetById(id).Img;
+            if (image == null || image?.Length == 0)
             {
                 return null;
             }
-            return File(imagedata, "image/jpg");
+            return File(image, "image/jpg");
         }
     }
 }

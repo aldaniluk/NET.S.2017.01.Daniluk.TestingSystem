@@ -56,7 +56,7 @@ namespace WebApplication.Controllers
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
-            return RedirectToAction("Login", "Account");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

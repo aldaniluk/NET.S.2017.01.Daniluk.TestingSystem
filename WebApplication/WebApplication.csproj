@@ -233,7 +233,7 @@
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Home\Profile.cshtml" />
     <Content Include="Views\Test\PassTest.cshtml" />
-    <Content Include="Views\Test\PassedTest.cshtml" />
+    <Content Include="Views\Test\TestResult.cshtml" />
     <Content Include="Views\Statistic\Index.cshtml" />
     <Content Include="Views\Test\Preview.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />

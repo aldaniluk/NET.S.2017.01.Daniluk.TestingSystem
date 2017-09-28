@@ -43,13 +43,16 @@ namespace WebApplication.Infrastructure.Mappers
         {
             if (test == null) return null;
             IEnumerable<Statistic> statistics = test.Statistics.Where(s => s.TestId == test.Id);
+            double averagePerc = 0;
+            if (statistics != null && statistics?.Count() != 0)
+                averagePerc = Math.Round(statistics.Sum(s => s.Percentage) / statistics.Count(), 2);
             return new PreviewTestViewModel
             {
                 Id = test.Id,
                 Description = test.Description,
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
-                AveragePercentage = Math.Round(statistics.Sum(s => s.Percentage) / statistics.Count(), 2),
+                AveragePercentage = averagePerc,
                 QuestionQuantity = test.Questions.Count(),
                 UsersQuantity = statistics.Count(),
                 IsReady = test.IsReady

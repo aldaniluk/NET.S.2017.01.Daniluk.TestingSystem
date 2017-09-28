@@ -13,7 +13,7 @@ namespace WebApplication.Infrastructure.Attributes
             if (test == null) return new ValidationResult("Test is incorrect.");
             if (test.IsReady == false) return ValidationResult.Success;
             
-            if (test.Questions == null || test.Questions?.Count == 0) return new ValidationResult("Test must have at least 3 questions.");
+            if (test.Questions == null || test.Questions?.Count < 2) return new ValidationResult("Test must have at least 3 questions.");
 
             foreach (var q in test.Questions)
             {

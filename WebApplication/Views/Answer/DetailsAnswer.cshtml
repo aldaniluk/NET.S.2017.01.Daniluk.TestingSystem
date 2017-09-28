@@ -12,6 +12,10 @@
         @Html.DisplayFor(model => model.Text)
     </h1>
 
+    <h3>
+        ~ @Html.DisplayFor(model => model.Explanation)
+    </h3>
+
     <p>
         @Html.ActionLink("Edit answer", "Edit", "Answer", new { id = Model.Id }, new { @class = "btn btn-default" }) 
         @Html.ActionLink("Delete answer", "Delete", "Answer", new { id = Model.Id }, new { @class = "btn btn-default" })

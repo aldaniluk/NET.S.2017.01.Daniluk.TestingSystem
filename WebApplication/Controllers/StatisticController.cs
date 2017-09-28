@@ -22,10 +22,9 @@ namespace WebApplication.Controllers
             this.testRepository = testRepository;
         }
 
-        [HttpGet]
         public ActionResult Index()
         {
-            List<TestViewModel> tests = testRepository.GetAll().Select(t => t.ToTestViewModel()).ToList();
+            List<TestViewModel> tests = testRepository.GetAllReady().Select(t => t.ToTestViewModel()).ToList();
             tests.Insert(0, new TestViewModel { Id = 0, Name = "All" });
             ViewBag.Tests = new SelectList(tests, "Id", "Name");
 

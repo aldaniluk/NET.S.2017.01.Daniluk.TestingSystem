@@ -40,8 +40,6 @@ namespace Domain.Consrete
 
         public void Update(Test entity)
         {
-            if (entity == null) return;
-
             Test testToUpdate = context.Set<Test>().FirstOrDefault(t => t.Id == entity.Id);
             context.Entry(testToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
@@ -49,7 +47,7 @@ namespace Domain.Consrete
 
         public void Delete(Test entity)
         {
-            Test test = context.Set<Test>().Single(t => t.Id == entity.Id);
+            Test test = context.Set<Test>().FirstOrDefault(t => t.Id == entity.Id);
             context.Set<Test>().Remove(test);
             context.SaveChanges();
         }
@@ -61,14 +59,18 @@ namespace Domain.Consrete
 
         public IEnumerable<Test> SearchAllTestsByKeyWord(string keyWord)
         {
-            //для ienumerable! а для iquerable ?
-            return GetAll().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || 
+            if (string.IsNullOrEmpty(keyWord))
+                return GetAll();
+            return context.Set<Test>().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) ||
                 t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 
         public IEnumerable<Test> SearchAllReadyTestsByKeyWord(string keyWord)
         {
-            return GetAllReady().Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || 
+            if (string.IsNullOrEmpty(keyWord))
+                return GetAllReady();
+            return context.Set<Test>().Where(t => t.IsReady == true)
+                .Where(t => t.Name.ToLower().Contains(keyWord.ToLower()) || 
                 t.Description.ToLower().Contains(keyWord.ToLower()));
         }
 

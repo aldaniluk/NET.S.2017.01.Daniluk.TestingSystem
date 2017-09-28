@@ -35,8 +35,6 @@ namespace Domain.Consrete
 
         public void Update(Question entity)
         {
-            if (entity == null) return;
-
             Question questionToUpdate = context.Set<Question>().FirstOrDefault(q => q.Id == entity.Id);
             context.Entry(questionToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
@@ -44,7 +42,7 @@ namespace Domain.Consrete
 
         public void Delete(Question entity)
         {
-            Question question = context.Set<Question>().Single(q => q.Id == entity.Id);
+            Question question = context.Set<Question>().FirstOrDefault(q => q.Id == entity.Id);
             context.Set<Question>().Remove(question);
             context.SaveChanges();
         }

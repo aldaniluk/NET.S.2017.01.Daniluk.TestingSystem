@@ -34,7 +34,8 @@ namespace Domain.Consrete
 
         public bool IsUserExists(string login)
         {
-            return context.Set<User>().FirstOrDefault(r => r.Login == login) != null;
+            User user = context.Set<User>().FirstOrDefault(r => r.Login == login);
+            return  (user != null);
         }
 
         public void Create(User entity)
@@ -45,8 +46,6 @@ namespace Domain.Consrete
 
         public void Update(User entity)
         {
-            if (entity == null) return;
-
             User userToUpdate = context.Set<User>().FirstOrDefault(u => u.Id == entity.Id);
             context.Entry(userToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
@@ -54,7 +53,7 @@ namespace Domain.Consrete
 
         public void Delete(User entity)
         {
-            User user = context.Set<User>().Single(u => u.Id == entity.Id);
+            User user = context.Set<User>().FirstOrDefault(u => u.Id == entity.Id);
             context.Set<User>().Remove(user);
             context.SaveChanges();
         }

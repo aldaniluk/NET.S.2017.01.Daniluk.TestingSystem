@@ -5,7 +5,7 @@ using WebApplication.Models.Answer;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "admin")]
     public class AnswerController : Controller
     {
         private readonly IAnswerRepository answerRepository;
@@ -24,7 +24,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
         public ActionResult Create(int questionId)
         {
             ViewBag.QuestionId = questionId;
@@ -33,7 +32,6 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ActionName("Create")]
-        [Authorize(Roles = "admin")]
         public ActionResult Created(AnswerViewModel answer)
         {
             if (ModelState.IsValid)
@@ -45,7 +43,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
         public ActionResult Edit(int id)
         {
             AnswerViewModel answer = answerRepository.GetById(id).ToAnswerViewModel();
@@ -54,7 +51,6 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ActionName("Edit")]
-        [Authorize(Roles = "admin")]
         public ActionResult Edited(AnswerViewModel answer)
         {
             if (ModelState.IsValid)
@@ -66,7 +62,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "admin")]
         public ActionResult Delete(int id)
         {
             AnswerViewModel answer = answerRepository.GetById(id).ToAnswerViewModel();
@@ -75,7 +70,6 @@ namespace WebApplication.Controllers
 
         [HttpPost]
         [ActionName("Delete")]
-        [Authorize(Roles = "admin")]
         public ActionResult Deleted(AnswerViewModel answer)
         {
             int questionId = answerRepository.GetById(answer.Id).QuestionId;

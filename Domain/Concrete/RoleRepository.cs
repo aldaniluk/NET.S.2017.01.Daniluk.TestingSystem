@@ -29,7 +29,7 @@ namespace Domain.Consrete
 
         public IEnumerable<Role> GetAll()
         {
-            return context.Set<Role>().AsEnumerable();
+            return context.Set<Role>();
         }
 
         public void Create(Role entity)
@@ -49,7 +49,7 @@ namespace Domain.Consrete
 
         public void Delete(Role entity)
         {
-            Role role = context.Set<Role>().Single(r => r.Id == entity.Id);
+            Role role = context.Set<Role>().FirstOrDefault(r => r.Id == entity.Id);
             context.Set<Role>().Remove(role);
             context.SaveChanges();
         }

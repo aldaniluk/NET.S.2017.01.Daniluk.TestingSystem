@@ -32,6 +32,13 @@ namespace Domain.Consrete
             return context.Set<Statistic>();
         }
 
+        public Statistic GetStatistic(int userId, int testId)
+        {
+            Statistic statistic = context.Set<Statistic>()
+                .FirstOrDefault(s => s.TestId == testId && s.UserId == userId);
+            return statistic;
+        }
+
         public void Create(Statistic entity)
         {
             context.Set<Statistic>().Add(entity);
@@ -40,9 +47,8 @@ namespace Domain.Consrete
 
         public void Update(Statistic entity)
         {
-            if (entity == null) return;
-
-            Statistic statisticToUpdate = context.Set<Statistic>().FirstOrDefault(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
+            Statistic statisticToUpdate = context.Set<Statistic>()
+                .FirstOrDefault(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
             context.Entry(statisticToUpdate).CurrentValues.SetValues(entity);
             context.SaveChanges();
         }
@@ -50,36 +56,38 @@ namespace Domain.Consrete
         public void Delete(Statistic entity)
         {
             Statistic statistic = context.Set<Statistic>()
-                .Single(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
+                .FirstOrDefault(s => s.UserId == entity.UserId && s.TestId == entity.TestId);
             context.Set<Statistic>().Remove(statistic);
             context.SaveChanges();
         }
 
         public bool IsUserPassedTest(int userId, int testId)
         {
-            return (context.Set<Statistic>().FirstOrDefault(s => s.TestId == testId && s.UserId == userId) != null);
+            Statistic statistic = context.Set<Statistic>()
+                .FirstOrDefault(s => s.TestId == testId && s.UserId == userId);
+            return (statistic != null);
         }
 
         public IEnumerable<Statistic> FilterStatistic(int? testId, StatisticSortType sortType)
         {
-            IEnumerable<Statistic> statictis;
-            statictis = (testId != null && testId != 0) ? GetByTestId((int)testId) : GetAll();
+            IEnumerable<Statistic> statictics;
+            statictics = (testId != null && testId != 0) ? GetByTestId((int)testId) : GetAll();
             switch (sortType)
             {
                 case StatisticSortType.Date:
-                    statictis = statictis.OrderByDescending(s => s.Date);
+                    statictics = statictics.OrderByDescending(s => s.Date);
                     break;
 
                 case StatisticSortType.Time:
-                    statictis = statictis.OrderBy(s => s.Time);
+                    statictics = statictics.OrderBy(s => s.Time);
                     break;
 
                 case StatisticSortType.Percentage:
                 default:
-                    statictis = statictis.OrderByDescending(s => s.Percentage);
+                    statictics = statictics.OrderByDescending(s => s.Percentage);
                     break;
             }
-            return statictis;
+            return statictics;
         }
     }
 }

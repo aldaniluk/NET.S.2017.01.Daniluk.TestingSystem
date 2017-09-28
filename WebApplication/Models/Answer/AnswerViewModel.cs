@@ -18,6 +18,7 @@ namespace WebApplication.Models.Answer
         public bool Right { get; set; }
 
         [DisplayName("Answer explantion")]
+        [Required(ErrorMessage = "Explanation cannot be empty.")]
         public string Explanation { get; set; }
 
         public int QuestionId { get; set; }
