@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Domain.Consrete
+namespace Domain.Concrete
 {
     public class RoleRepository : IRoleRepository
     {

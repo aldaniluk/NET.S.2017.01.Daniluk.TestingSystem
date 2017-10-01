@@ -8,7 +8,7 @@
 
         $.ajax({
             method: "GET",
-            url: "/Test/IsAnswerTrue/" + answer,
+            url: "/Answer/IsAnswerTrue/" + answer,
             success: function (data) {
                 console.log(data);
                 if (data == "True") {

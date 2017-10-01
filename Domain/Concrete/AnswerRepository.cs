@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 
-namespace Domain.Consrete
+namespace Domain.Concrete
 {
     public class AnswerRepository : IAnswerRepository
     {

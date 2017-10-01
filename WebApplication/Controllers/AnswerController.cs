@@ -76,5 +76,11 @@ namespace WebApplication.Controllers
             return RedirectToAction("Details", "Question", new { id = questionId });
         }
 
+        [Authorize(Roles = "user")]
+        public bool IsAnswerTrue(int id)
+        {
+            return answerRepository.GetById(id).Right;
+        }
+
     }
 }

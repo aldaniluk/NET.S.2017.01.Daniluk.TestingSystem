@@ -38,7 +38,16 @@ namespace WebApplication.Controllers
         {
             IEnumerable<StatisticViewModel> statictics = statisticRepository.FilterStatistic(testId, sortType)
                 .Select(s => s.ToStatisticViewModel());
-            return PartialView("_Statistics", statictics);
+            if (Request.IsAjaxRequest())
+                return PartialView("_Statistics", statictics);
+            return View("_Statistics", statictics);
+        }
+
+        [Authorize(Roles = "user")]
+        public ActionResult TestResult(int userId, int testId)
+        {
+            StatisticViewModel statistic = statisticRepository.GetStatistic(userId, testId).ToStatisticViewModel();
+            return View("TestResult", statistic);
         }
     }
 }

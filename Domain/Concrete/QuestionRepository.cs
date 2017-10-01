@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using Domain.Entities;
 using Domain.Abstract;
 
-namespace Domain.Consrete
+namespace Domain.Concrete
 {
     public class QuestionRepository : IQuestionRepository
     {

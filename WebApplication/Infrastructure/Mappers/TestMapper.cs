@@ -69,5 +69,17 @@ namespace WebApplication.Infrastructure.Mappers
                 Questions = test.Questions?.Select(q => q.ToQuestion()).ToList()
             };
         }
+
+        public static PassTestModel ToPassTestModel(this PassTestViewModel test)
+        {
+            return new PassTestModel
+            {
+                TestId = test.Id,
+                UserId = test.UserId,
+                MinPercentage = test.MinPercentage,
+                UserAnswers = test.UserAnswers,
+                BeginDate = DateTime.Now
+            };
+        }
     }
 }

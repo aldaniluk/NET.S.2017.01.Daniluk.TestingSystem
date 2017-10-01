@@ -6,7 +6,7 @@ using Domain.Entities;
 using System.Collections.Generic;
 using Domain.Abstract;
 
-namespace Domain.Consrete
+namespace Domain.Concrete
 {
     public class UserRepository : IUserRepository
     {

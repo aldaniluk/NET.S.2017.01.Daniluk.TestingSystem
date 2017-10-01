@@ -13,19 +13,17 @@ namespace WebApplication.Controllers
     public class TestController : Controller
     {
         private readonly ITestRepository testRepository;
-        private readonly IQuestionRepository questionRepository;
-        private readonly IAnswerRepository answerRepository;
         private readonly IStatisticRepository statisticRepository;
         private readonly IUserRepository userRepository;
+        private readonly IPassTestService passTestService;
 
-        public TestController(ITestRepository testRepository, IQuestionRepository questionRepository, 
-            IAnswerRepository answerRepository, IStatisticRepository statisticRepository, IUserRepository userRepository)
+        public TestController(ITestRepository testRepository, IStatisticRepository statisticRepository, 
+            IUserRepository userRepository, IPassTestService passTestService)
         {
             this.testRepository = testRepository;
-            this.questionRepository = questionRepository;
-            this.answerRepository = answerRepository;
             this.statisticRepository = statisticRepository;
             this.userRepository = userRepository;
+            this.passTestService = passTestService;
         }
 
         public ActionResult Index()
@@ -72,7 +70,9 @@ namespace WebApplication.Controllers
             {
                 tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
             }
-            return PartialView("_Tests", tests);
+            if(Request.IsAjaxRequest())
+                return PartialView("_Tests", tests);
+            return View("_Tests", tests);
         }
 
         [HttpGet]
@@ -94,20 +94,8 @@ namespace WebApplication.Controllers
         {
             int userId = userRepository.GetByLogin(User.Identity.Name).Id;
             passTestModel.UserId = userId;
-            PassTest(passTestModel);
-            return RedirectToAction("TestResult", "Test", new { userId = userId, testId = passTestModel.Id });
-        }
-
-        [Authorize(Roles = "user")]
-        public ActionResult TestResult(int userId, int testId)
-        {
-            StatisticViewModel statistic = statisticRepository.GetStatistic(userId, testId).ToStatisticViewModel();
-            return View("TestResult", statistic);
-        }
-
-        public bool IsAnswerTrue(int id) 
-        {
-            return answerRepository.GetById(id).Right;
+            passTestService.PassTest(passTestModel.ToPassTestModel());
+            return RedirectToAction("TestResult", "Statistic", new { userId = userId, testId = passTestModel.Id });
         }
 
         #region Methods for admin
@@ -180,36 +168,9 @@ namespace WebApplication.Controllers
         #endregion
 
         #region BLL methods
-        private void PassTest(PassTestViewModel passTestModel)
-        {
-            double percentage = CountPercentageOfRightAnswers(passTestModel.UserAnswers);
-            TimeSpan time = DateTime.Now - passTestModel.BeginDate;
-            StatisticViewModel statistic = new StatisticViewModel
-            {
-                TestId = passTestModel.Id,
-                UserId = passTestModel.UserId,
-                Date = DateTime.Now,
-                Time = new TimeSpan(time.Hours, time.Minutes, time.Seconds),
-                Percentage = percentage,
-                IsPassed = (percentage >= passTestModel.MinPercentage)
-            };
-            if (statisticRepository.IsUserPassedTest(passTestModel.UserId, passTestModel.Id))
-                statisticRepository.Update(statistic.ToStatistic());
-            else
-                statisticRepository.Create(statistic.ToStatistic());
-        }
+        
 
-        private double CountPercentageOfRightAnswers(int[] userAnswers)
-        {
-            int rightAnswers = 0;
-            int allAnswers = userAnswers.Length;
-            for (int i = 0; i < allAnswers; i++)
-            {
-                if (answerRepository.GetById(userAnswers[i]).Right)
-                    rightAnswers++;
-            }
-            return Math.Round((double)rightAnswers / allAnswers * 100, 2);
-        }
+        
         #endregion
     }
 }

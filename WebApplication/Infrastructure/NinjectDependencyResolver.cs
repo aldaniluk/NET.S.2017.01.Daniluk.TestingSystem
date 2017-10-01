@@ -1,5 +1,5 @@
 ﻿using Domain.Abstract;
-using Domain.Consrete;
+using Domain.Concrete;
 using Domain.Entities;
 using Ninject;
 using Ninject.Web.Common;
@@ -41,6 +41,7 @@ namespace WebApplication.Infrastructure
             kernel.Bind<IUserRepository>().To<UserRepository>();
             kernel.Bind<IRoleRepository>().To<RoleRepository>();
             kernel.Bind<IStatisticRepository>().To<StatisticRepository>();
+            kernel.Bind<IPassTestService>().To<PassTestService>();
         }
     }
 }
