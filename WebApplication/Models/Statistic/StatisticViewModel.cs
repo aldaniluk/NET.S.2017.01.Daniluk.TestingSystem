@@ -6,6 +6,7 @@ namespace WebApplication.Models.Statistic
     public class StatisticViewModel
     {
         public int UserId { get; set; }
+
         public int TestId { get; set; }
 
         [DisplayName("Test name")]

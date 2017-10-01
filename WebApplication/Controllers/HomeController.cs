@@ -5,8 +5,7 @@ using WebApplication.Infrastructure.Mappers;
 using System.Web;
 
 namespace WebApplication.Controllers
-{
-    [Authorize]
+{   
     public class HomeController : Controller
     {
         private readonly IUserRepository userRepository;
@@ -16,12 +15,12 @@ namespace WebApplication.Controllers
             this.userRepository = userRepository;
         }
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
             return View();
         }
 
+        [Authorize]
         public ActionResult Profile()
         {
             UserProfileViewModel user = userRepository.GetByLogin(User.Identity.Name).ToUserProfileViewModel();

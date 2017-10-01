@@ -28,7 +28,6 @@ namespace WebApplication.Controllers
             this.userRepository = userRepository;
         }
 
-        [AllowAnonymous]
         public ActionResult Index()
         {
             IEnumerable<PreviewTestViewModel> tests;
@@ -43,7 +42,6 @@ namespace WebApplication.Controllers
             return View(tests);
         }
 
-        [AllowAnonymous]
         public ActionResult Preview(int id)
         {
             PreviewTestViewModel test = testRepository.GetById(id).ToPreviewTestViewModel();
@@ -61,6 +59,20 @@ namespace WebApplication.Controllers
             }
             ViewBag.Message = message;
             return View(test);
+        }
+
+        public ActionResult SearchTest(string keyWord)
+        {
+            IEnumerable<PreviewTestViewModel> tests;
+            if (User.IsInRole("admin"))
+            {
+                tests = testRepository.SearchAllTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
+            }
+            else
+            {
+                tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
+            }
+            return PartialView("_Tests", tests);
         }
 
         [HttpGet]
@@ -93,56 +105,9 @@ namespace WebApplication.Controllers
             return View("TestResult", statistic);
         }
 
-        #region BLL methods
-        private void PassTest(PassTestViewModel passTestModel)
-        {
-            double percentage = CountPercentageOfRightAnswers(passTestModel.UserAnswers);
-            TimeSpan time = DateTime.Now - passTestModel.BeginDate;
-            StatisticViewModel statistic = new StatisticViewModel
-            {
-                TestId = passTestModel.Id,
-                UserId = passTestModel.UserId,
-                Date = DateTime.Now,
-                Time = new TimeSpan(time.Hours, time.Minutes, time.Seconds),
-                Percentage = percentage,
-                IsPassed = (percentage >= passTestModel.MinPercentage)
-            };
-            if (statisticRepository.IsUserPassedTest(passTestModel.UserId, passTestModel.Id))
-                statisticRepository.Update(statistic.ToStatistic());
-            else
-                statisticRepository.Create(statistic.ToStatistic());
-        }
-
-        private double CountPercentageOfRightAnswers(int[] userAnswers)
-        {
-            int rightAnswers = 0;
-            int allAnswers = userAnswers.Length;
-            for (int i = 0; i < allAnswers; i++)
-            {
-                if (answerRepository.GetById(userAnswers[i]).Right)
-                    rightAnswers++;
-            }
-            return Math.Round((double)rightAnswers / allAnswers * 100, 2);
-        }
-        #endregion
-
-        public bool IsAnswerTrue(int id) ////////////////////////
+        public bool IsAnswerTrue(int id) 
         {
             return answerRepository.GetById(id).Right;
-        }
-
-        public ActionResult SearchTest(string keyWord)
-        {
-            IEnumerable<PreviewTestViewModel> tests;
-            if (User.IsInRole("admin"))
-            {
-                tests = testRepository.SearchAllTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
-            }
-            else
-            {
-                tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
-            } 
-            return PartialView("_Tests", tests);
         }
 
         #region Methods for admin
@@ -214,5 +179,37 @@ namespace WebApplication.Controllers
         }
         #endregion
 
+        #region BLL methods
+        private void PassTest(PassTestViewModel passTestModel)
+        {
+            double percentage = CountPercentageOfRightAnswers(passTestModel.UserAnswers);
+            TimeSpan time = DateTime.Now - passTestModel.BeginDate;
+            StatisticViewModel statistic = new StatisticViewModel
+            {
+                TestId = passTestModel.Id,
+                UserId = passTestModel.UserId,
+                Date = DateTime.Now,
+                Time = new TimeSpan(time.Hours, time.Minutes, time.Seconds),
+                Percentage = percentage,
+                IsPassed = (percentage >= passTestModel.MinPercentage)
+            };
+            if (statisticRepository.IsUserPassedTest(passTestModel.UserId, passTestModel.Id))
+                statisticRepository.Update(statistic.ToStatistic());
+            else
+                statisticRepository.Create(statistic.ToStatistic());
+        }
+
+        private double CountPercentageOfRightAnswers(int[] userAnswers)
+        {
+            int rightAnswers = 0;
+            int allAnswers = userAnswers.Length;
+            for (int i = 0; i < allAnswers; i++)
+            {
+                if (answerRepository.GetById(userAnswers[i]).Right)
+                    rightAnswers++;
+            }
+            return Math.Round((double)rightAnswers / allAnswers * 100, 2);
+        }
+        #endregion
     }
 }

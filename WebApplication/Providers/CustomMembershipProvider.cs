@@ -30,10 +30,10 @@ namespace WebApplication.Providers
                 Password = Crypto.HashPassword(password)
             };
 
-            IEnumerable<Role> roles = RoleRepository.GetByName("user");
-            if (roles != null)
+            Role role = RoleRepository.GetByName("user");
+            if (role != null)
             {
-                user.Roles = roles.ToList();
+                user.Roles = new List<Role>(1) { role };
             }
 
             UserRepository.Create(user);
@@ -62,7 +62,7 @@ namespace WebApplication.Providers
             return memberUser;
         }
 
-        #region Stabs
+        #region Stubs
         public override MembershipUser CreateUser(string username, string password, string login,
             string passwordQuestion,
             string passwordAnswer, bool isApproved, object providerUserKey, out MembershipCreateStatus status)

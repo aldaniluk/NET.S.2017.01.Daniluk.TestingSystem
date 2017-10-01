@@ -18,10 +18,7 @@ namespace WebApplication.Providers
 
         public override bool IsUserInRole(string login, string roleName)
         {
-            User user = UserRepository.GetAll().FirstOrDefault(u => u.Login == login);
-
-            if (user == null) return false;
-
+            User user = UserRepository.GetByLogin(login);
             List<Role> userRoles = new List<Role>();
             foreach(var r in user.Roles)
             {
@@ -33,34 +30,21 @@ namespace WebApplication.Providers
 
         public override string[] GetRolesForUser(string login)
         {
-            using (var context = new Context())
+            string[] roles = new string[] { };
+            IEnumerable<Role> userRoles = UserRepository.GetByLogin(login).Roles;            
+            if (userRoles != null)
             {
-                var roles = new string[] { };
-                var user = context.Users.FirstOrDefault(u => u.Login == login);
-
-                if (user == null) return roles;
-
-                var userRoles = user.Roles;
-
-                if (userRoles != null)
-                {
-                    roles = userRoles.Select(r => r.Name).ToArray();
-                }
-                return roles;
+                roles = userRoles.Select(r => r.Name).ToArray();
             }
+            return roles;
         }
 
+        #region Stubs
         public override void CreateRole(string roleName)
         {
-            var newRole = new Role() { Name = roleName };
-            using (var context = new Context())
-            {
-                context.Roles.Add(newRole);
-                context.SaveChanges();
-            }
+            throw new NotImplementedException();
         }
 
-        #region Stabs
         public override bool DeleteRole(string roleName, bool throwOnPopulatedRole)
         {
             throw new NotImplementedException();

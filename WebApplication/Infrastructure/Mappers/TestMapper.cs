@@ -11,7 +11,6 @@ namespace WebApplication.Infrastructure.Mappers
     {
         public static TestViewModel ToTestViewModel(this Test test)
         {
-            if (test == null) return null;
             return new TestViewModel
             {
                 Id = test.Id,
@@ -19,13 +18,12 @@ namespace WebApplication.Infrastructure.Mappers
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
                 IsReady = test.IsReady,
-                Questions = test.Questions?.Select(q => q.ToQuestionViewModel()).ToList()
+                Questions = test.Questions.Select(q => q.ToQuestionViewModel()).ToList()
             };
         }
 
         public static PassTestViewModel ToPassTestViewModel(this Test test)
         {
-            if (test == null) return null;
             return new PassTestViewModel
             {
                 Id = test.Id,
@@ -41,11 +39,11 @@ namespace WebApplication.Infrastructure.Mappers
 
         public static PreviewTestViewModel ToPreviewTestViewModel(this Test test)
         {
-            if (test == null) return null;
             IEnumerable<Statistic> statistics = test.Statistics.Where(s => s.TestId == test.Id);
             double averagePerc = 0;
             if (statistics != null && statistics?.Count() != 0)
                 averagePerc = Math.Round(statistics.Sum(s => s.Percentage) / statistics.Count(), 2);
+
             return new PreviewTestViewModel
             {
                 Id = test.Id,
@@ -61,7 +59,6 @@ namespace WebApplication.Infrastructure.Mappers
 
         public static Test ToTest(this TestViewModel test)
         {
-            if (test == null) return null;
             return new Test
             {
                 Id = test.Id,

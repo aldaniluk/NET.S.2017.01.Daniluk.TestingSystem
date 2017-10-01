@@ -6,7 +6,6 @@
 
 <div class="pass_test">
     <div id="timer" class="timer">00:00:00</div>
-
     
 @using (Html.BeginForm("PassTest", "Test", FormMethod.Post))
 {
@@ -22,44 +21,41 @@
 
         @for (int i = 0; i < Model.Questions.Count(); i++)
         {
-            <div class="pass_test__question col-md-6">
-                <div>
-                    <h2>@Html.DisplayFor(model => model.Questions[i].Text)</h2>
+        <div class="pass_test__question col-md-6">
+            <div>
+                <h2>@Html.DisplayFor(model => model.Questions[i].Text)</h2>
 
-                    @if (Model.Questions[i].Img != null)
+                @if (Model.Questions[i].Img != null)
+                {
+                    <br />
+                    @*<img width="300" height="200" src="@Url.Action("GetImage", "Question", new { id = @Model.Questions[i].Id })" />*@
+                    @Html.Image(@Url.Action("GetImage", "Question", new { id = Model.Questions[i].Id }), 350, 200)
+                    <br />
+                }
+
+                <div class="pass_test__question__answers">
+                    @foreach (var a in Model.Questions[i].Answers)
                     {
-                        <br />
-                        @*<img width="300" height="200" src="@Url.Action("GetImage", "Question", new { id = @Model.Questions[i].Id })" />*@
-                        @Html.Image(@Url.Action("GetImage", "Question", new { id = Model.Questions[i].Id }), 350, 200)
-                        <br />
-                    }
-
-                    <div class="pass_test__question__answers">
-                        @foreach (var a in Model.Questions[i].Answers)
-                        {
-                            @Html.HiddenFor(item => a.Id)
-                            @Html.HiddenFor(item => a.Right)
-                            <div class="pass_test__question__answer col-xs-12">
+                        @Html.HiddenFor(item => a.Id)
+                        @Html.HiddenFor(item => a.Right)
+                        <div class="pass_test__question__answer col-xs-12">
                                 
-                                @Html.RadioButtonFor(model => model.UserAnswers[i], a.Id, new { @class = "question_" + Model.Questions[i].Id + " radiobtn", id = a.Id })
+                            @Html.RadioButtonFor(model => model.UserAnswers[i], a.Id, new { @class = "question_" + Model.Questions[i].Id + " radiobtn", id = a.Id })
 
-
-                                <div class="answer @a.Id">
-                                    @Html.DisplayFor(model => a.Text)
-                                </div>
-
-                                
-
-                                <div class="explanation explanation_@a.Id">
-                                    ~ @Html.DisplayFor(model => a.Explanation)
-                                </div>
-
-                                @*@Html.AnswerFor(model => model.UserAnswersViewModel[i], a.Id)*@
+                            <div class="answer @a.Id">
+                                @Html.DisplayFor(model => a.Text)
                             </div>
-                        }
-                    </div>
+
+                            <div class="explanation explanation_@a.Id">
+                                ~ @Html.DisplayFor(model => a.Explanation)
+                            </div>
+
+                            @*@Html.AnswerFor(model => model.UserAnswersViewModel[i], a.Id)*@
+                        </div>
+                    }
                 </div>
             </div>
+        </div>
         }
     </div>
 
@@ -69,84 +65,5 @@
 }
 </div>
 
-
-<script>
-    $(document).ready(function () {
-        $(".explanation").hide();
-
-        //timer
-        var timer = document.getElementById("timer");
-        var h = 0;
-        var m = 0;
-        var s = 0;
-        startTimer();
-        function startTimer() {
-            s++;
-            if (s == 60) {
-                s = 0;
-                m++;
-                if (m == 60) {
-                    m = 0;
-                    h++;
-                }
-            }
-            timer.textContent = (h < 10 ? "0" : "") + h + ":"
-                + (m < 10 ? "0" : "") + m + ":"
-                + (s < 10 ? "0" : "") + s;
-            setTimeout(startTimer, 1000);
-        }
-
-        $(".radiobtn").click(function () {
-            var radiobtn = $(this).attr("class").split(' ')[0];
-            $("." + radiobtn).hide();
-            var answer = $(this).attr("id");
-
-            $.ajax({
-                method: "GET",
-                url: "/Test/IsAnswerTrue/" + answer,
-                success: function (data) {
-                    console.log(data);
-                    if (data == "True") {
-                        $("." + answer).addClass("correct");
-                    }
-                    else {
-                        $("." + answer).addClass("wrong");
-                    }
-                    $(".explanation_" + answer).show();
-                }
-            });
-        })
-
-        @*int count = 0;
-        $(".answer").click(function () {
-            var id = $(this).attr("id");
-            if ($("#" + id).parent().parent().hasClass("selected"))
-                return;
-            $.ajax({
-                method: "GET",
-                url: "/Test/IsAnswerTrue/" + id,
-                success: function (data) {
-                    if (data == "True") {
-                        $("#" + id).addClass("correct");
-                    } 
-                    else {
-                        $("#" + id).addClass("wrong");
-                    }
-                    count++;
-                    $("#" + id).parent().parent().addClass("selected");
-                }
-            });
-
-            if (count == @Model.Questions.Count){
-                $.ajax({
-                    method: "GET",
-                    url: "/Test/TestResults",
-
-                });
-            }
-        })*@
-
-    })
-
-
-</script>
+@Scripts.Render("~/bundles/timer")
+@Scripts.Render("~/bundles/passTest")

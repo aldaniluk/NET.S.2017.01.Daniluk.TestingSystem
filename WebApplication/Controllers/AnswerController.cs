@@ -16,7 +16,6 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Details(int id)
         {
             AnswerViewModel answer = answerRepository.GetById(id).ToAnswerViewModel();

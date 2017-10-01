@@ -10,7 +10,6 @@ using WebApplication.Models.Test;
 
 namespace WebApplication.Controllers
 {
-    [AllowAnonymous]
     public class StatisticController : Controller
     {
         private readonly IStatisticRepository statisticRepository;

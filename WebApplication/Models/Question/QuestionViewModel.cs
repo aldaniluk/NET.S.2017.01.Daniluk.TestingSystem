@@ -18,6 +18,7 @@ namespace WebApplication.Models.Question
         public byte[] Img { get; set; }
 
         public int TestId { get; set; }
+
         public List<AnswerViewModel> Answers { get; set; }
     }
 }

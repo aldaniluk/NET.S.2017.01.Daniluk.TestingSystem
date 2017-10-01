@@ -8,7 +8,6 @@ using WebApplication.Providers;
 
 namespace WebApplication.Controllers
 {
-    [Authorize]
     public class AccountController : Controller
     {
         private readonly IUserRepository userRepository;
@@ -18,14 +17,12 @@ namespace WebApplication.Controllers
             this.userRepository = userRepository;
         }
 
-        [AllowAnonymous]
         public ActionResult Login(string returnUrl)
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginUserViewModel viewModel, string returnUrl)
         {
@@ -53,6 +50,7 @@ namespace WebApplication.Controllers
             return View(viewModel);
         }
 
+        [Authorize]
         public ActionResult LogOff()
         {
             FormsAuthentication.SignOut();
@@ -60,14 +58,12 @@ namespace WebApplication.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
         public ActionResult Register()
         {
             return View();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterUserViewModel viewModel)
         {
@@ -97,14 +93,12 @@ namespace WebApplication.Controllers
             return View(viewModel);
         }
 
-        [AllowAnonymous]
         public JsonResult ValidLogIn(string login)
         {
             bool isExist = userRepository.IsUserExists(login);
             return Json(!isExist, JsonRequestBehavior.AllowGet);
         }
 
-        [AllowAnonymous]
         public JsonResult ValidLogUp(string login)
         {
             bool isExist = userRepository.IsUserExists(login);
