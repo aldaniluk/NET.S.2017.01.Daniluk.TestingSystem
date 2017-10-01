@@ -264,16 +264,23 @@ textarea {
     background-size: cover;
     padding: 10% 15%;
 }
+.test_preview > h3{
+    font-size: 27px;
+}
 .test_preview > h1 {
     font-size: 50px;
 }
 .test_preview__desc {
     margin: 30px 0 50px 0;
 }
+.test_preview__desc > h4 {
+    font-size: 20px;
+}
 .test_preview__btn {
     font-size: 25px;
     padding: 10px 20px;
 }
+
 
 /*create test*/
 .create_test__header {

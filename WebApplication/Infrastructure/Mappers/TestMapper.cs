@@ -78,7 +78,7 @@ namespace WebApplication.Infrastructure.Mappers
                 UserId = test.UserId,
                 MinPercentage = test.MinPercentage,
                 UserAnswers = test.UserAnswers,
-                BeginDate = DateTime.Now
+                BeginDate = test.BeginDate
             };
         }
     }
