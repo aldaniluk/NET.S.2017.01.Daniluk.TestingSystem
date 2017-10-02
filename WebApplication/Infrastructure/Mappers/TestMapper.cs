@@ -53,7 +53,8 @@ namespace WebApplication.Infrastructure.Mappers
                 AveragePercentage = averagePerc,
                 QuestionQuantity = test.Questions.Count(),
                 UsersQuantity = statistics.Count(),
-                IsReady = test.IsReady
+                IsReady = test.IsReady,
+                Image = test.Image
             };
         }
 

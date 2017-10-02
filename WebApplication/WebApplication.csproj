@@ -253,7 +253,7 @@
     <Content Include="Views\Answer\DeleteAnswer.cshtml" />
     <Content Include="Views\Statistic\_Statistics.cshtml" />
     <Content Include="Views\Test\NotReadyTest.cshtml" />
-    <Content Include="Views\Test\_Tests.cshtml" />
+    <Content Include="Views\Test\_Test.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />

@@ -249,8 +249,40 @@ textarea {
     padding: 6.5px 15px;
 }
 .all_tests {
-    background: white
+    background: white;
+    overflow: auto;
+    padding: 5px;
+    overflow-x: hidden
 }
+.one_test-container {
+    padding: 5px;
+    margin: 0
+}
+.one_test {
+    padding: 10px;
+    text-align: center;
+    background: #d2ddcc
+}
+.one_test > h2 {
+    
+}
+.one_test > h2 > a {
+    color: black
+}
+.one_test__img {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden
+}
+.one_test__img > img {
+    width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
 /*test perview*/
 .test_preview {
     color: black;

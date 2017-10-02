@@ -71,8 +71,9 @@ namespace WebApplication.Controllers
                 tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
             }
             if(Request.IsAjaxRequest())
-                return PartialView("_Tests", tests);
-            return View("_Tests", tests);
+                return PartialView("_Test", tests); //json!!!!!!!!!!
+                //return Json(tests.ToList(), JsonRequestBehavior.AllowGet);
+            return View("_Test", tests);
         }
 
         [HttpGet]
@@ -96,6 +97,16 @@ namespace WebApplication.Controllers
             passTestModel.UserId = userId;
             passTestService.PassTest(passTestModel.ToPassTestModel());
             return RedirectToAction("TestResult", "Statistic", new { userId = userId, testId = passTestModel.Id });
+        }
+
+        public ActionResult GetImage(int id)
+        {
+            byte[] image = testRepository.GetById(id).Image;
+            if (image == null || image?.Length == 0)
+            {
+                return null;
+            }
+            return File(image, "image/jpg");
         }
 
         #region Methods for admin

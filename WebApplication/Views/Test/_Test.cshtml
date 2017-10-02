@@ -1,6 +1,40 @@
 ﻿@model IEnumerable<WebApplication.Models.Test.PreviewTestViewModel>
 
-<table class="table">
+@foreach (var i in Model)
+{
+<div class="one_test-container col-lg-4 col-md-6 col-xm-12">
+    <div class="one_test">
+        <h2>
+            @Html.ActionLink(i.Name, "Preview", "Test", new { id = i.Id }, null)
+        </h2>
+        <p>
+            @Html.DisplayFor(model => i.Description)
+        </p>
+        <div class="one_test__img">
+            @Html.Image(@Url.Action("GetImage", "Test", new { id = i.Id }))
+        </div>
+
+        @if (User.IsInRole("admin"))
+        {
+            if(i.IsReady)
+            {
+                <h4>>IS READY<</h4>
+            }
+            else
+            {
+                <h4>>IS NOT READY<</h4>
+            }
+
+            @Html.ActionLink("Edit", "Edit", "Test", new { id = i.Id }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Details", "Details", "Test", new { id = i.Id }, new { @class = "btn btn-default" }) 
+            @Html.ActionLink("Delete", "Delete", "Test", new { id = i.Id }, new { @class = "btn btn-default" })
+        }
+    </div>
+</div>
+}
+
+
+@*<table class="table">
     <tr>
         <th>
             @Html.DisplayNameFor(model => model.Name)
@@ -28,7 +62,7 @@
         <tr>
             <td>
                 @Html.ActionLink(item.Name, "Preview", "Test", new { id = item.Id }, null)
-                @*@Html.DisplayFor(modelItem => item.Name)*@
+                
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -52,4 +86,4 @@
             }
         </tr>
     }
-</table>
+</table>*@
