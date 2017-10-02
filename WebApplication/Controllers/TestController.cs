@@ -166,11 +166,5 @@ namespace WebApplication.Controllers
             return View("DetailsTest", test);
         }
         #endregion
-
-        #region BLL methods
-        
-
-        
-        #endregion
     }
 }

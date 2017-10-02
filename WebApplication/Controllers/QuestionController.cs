@@ -93,7 +93,7 @@ namespace WebApplication.Controllers
             return RedirectToAction("Details", "Test", new { id = testId });
         }
 
-        [Authorize(Roles = "user")]
+        [Authorize]
         public ActionResult GetImage(int id)
         {
             byte[] image = questionRepository.GetById(id).Img;
