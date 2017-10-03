@@ -28,24 +28,24 @@ namespace WebApplication.Controllers
             this.passTestService = passTestService;
         }
 
-        public ActionResult Index(int page = 1)
+        public ActionResult Index(int page = 1, string keyWord = "")
         {
             TestPreviewPagingViewModel pagingViewModel = new TestPreviewPagingViewModel
             {
                 Tests = User.IsInRole("admin") ?
-                    testRepository.GetAll().Skip((page - 1) * PageSize).Take(PageSize)
+                    testRepository.SearchAllTestsByKeyWord(keyWord).Skip((page - 1) * PageSize).Take(PageSize)
                     .Select(t => t.ToPreviewTestViewModel()).ToList() :
-                    testRepository.GetAllReady().Skip((page - 1) * PageSize).Take(PageSize)
+                    testRepository.SearchAllReadyTestsByKeyWord(keyWord).Skip((page - 1) * PageSize).Take(PageSize)
                     .Select(t => t.ToPreviewTestViewModel()).ToList(),
                 PagingInfo = new PagingInfo
                 {
                     CurrentPage = page,
                     ItemsPerPage = PageSize,
-                    TotalItems = User.IsInRole("admin") ? 
-                        testRepository.GetAll().Count() : 
-                        testRepository.GetAllReady().Count()
+                    TotalItems = User.IsInRole("admin") ?
+                        testRepository.SearchAllTestsByKeyWord(keyWord).Count() :
+                        testRepository.SearchAllReadyTestsByKeyWord(keyWord).Count()
                 },
-                CurrentKewWord = null
+                CurrentKewWord = keyWord
             };
             if (Request.IsAjaxRequest())
                 //return PartialView("_Test", pagingViewModel);
@@ -73,7 +73,8 @@ namespace WebApplication.Controllers
                 CurrentKewWord = keyWord
             };
             if (Request.IsAjaxRequest())
-                return PartialView("_Test", pagingViewModel);
+                // return PartialView("_Test", pagingViewModel);
+                return Json(pagingViewModel, JsonRequestBehavior.AllowGet);
             return View(pagingViewModel);
             
             //if (Request.IsAjaxRequest())

@@ -27,9 +27,6 @@ namespace WebApplication.Infrastructure.Helpers
             return new MvcHtmlString(img.ToString());
         }
 
-        //<ul class="pagination">
-        //<li class="page-item"><a class="page-link" href="#">Previous</a></li>
-
         public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, string classes = null)
         {
             var result = new StringBuilder();

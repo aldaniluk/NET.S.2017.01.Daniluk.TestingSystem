@@ -246,15 +246,13 @@ textarea {
     padding: 23px 10px;
     background: rgb(42, 92, 85);
     font-size: 18px;
+    overflow: auto;
 }
 .search_by_keyword__btn {
     padding: 4px 15px;
 }
-.search_by_keyword__input{
-    padding: 4px 15px;
-}
-.search_by_keyword__input:hover {
-    background: rgba(0,0,0,0);
+.search_by_keyword__inp {
+    
 }
 .create_test_btn {
     padding: 6.5px 15px;

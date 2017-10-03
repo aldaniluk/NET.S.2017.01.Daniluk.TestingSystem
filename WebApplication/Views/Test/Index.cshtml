@@ -1,27 +1,26 @@
 ﻿@model WebApplication.Models.Paging.TestPreviewPagingViewModel
 
-@using (Ajax.BeginForm("SearchTest", "Test",
-new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = InsertionMode.Replace,
-    /*OnSuccess = "ReturnTests"*/
-}))
+@using (Ajax.BeginForm("Index", "Test",
+new AjaxOptions { HttpMethod = "GET", OnSuccess = "ReturnTests", LoadingElementId="pager", InsertionMode=InsertionMode.Replace}))
 {
-    <div class="form-inline search_by_keyword">
-        Search by key word:
+    <div class="form-inline search_by_keyword col-xs-12">
+        @*<div class="col-xs-12 col-sm-3">Search by key word:</div>*@
+        
+        <input class="form-control search_by_keyword__inp" name="keyWord" />
 
-        <input class="form-control" name="keyWord"/>
-
-        <input type="submit" value="Search" class="btn btn-default" />
+        <input type="submit" value="Search" class="btn btn-default" id="search_by_keyword" />        
 
         @if (User.IsInRole("admin"))
         {
-            @Html.ActionLink("Create new test", "Create", "Test", null, new { @class = "btn btn-default" })
+            @Html.ActionLink("Create new test", "Create", "Test", null, 
+           new { @class = "btn btn-default" })
         }
 
     </div>
 }
 
 <div id="tests" class="all_tests col-xs-12">
-    @Html.Partial("~/Views/Test/_Test.cshtml", Model.Tests)
+    @Html.Partial("~/Views/Test/_Test.cshtml", Model.PagingInfo.ItemsPerPage)
 </div>
 
 <div class="pager">
@@ -30,39 +29,54 @@ new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = 
 
 
 <script type='text/javascript'>
+    initialFilling();
 
-$(document).ready(
-    $(".pager__number").click(function () {
+    function initialFilling() {
         $.ajax({
-            url: '/Test/Index?page=' + $(this).attr("id"),
+            url: '/Test/Index?page=1',
             type: 'GET',
             cache: false,
             success: function (data) {
-                console.log(data);
-                for (var j = 0; j < @Model.PagingInfo.ItemsPerPage; j++) {
-                    if (data.Tests[j] == null)
-                        break; //?????????
-                    $(".one_test__name-" + j).text(data.Tests[j].Name);
-                    $(".one_test__name-" + j).attr('href', '/Test/Preview/' + data.Tests[j].Id);
-                    $(".one_test__description-" + j).text(data.Tests[j].Description);
-                    $(".image-" + j).attr('src', data.Tests[j].Image);
-                    $(".edit-" + j).attr('href', '/Test/Edit/' + data.Tests[j].Id);
-                    $(".details-" + j).attr('href', '/Test/Details/' + data.Tests[j].Id);
-                    $(".delete-" + j).attr('href', '/Test/Delete/' + data.Tests[j].Id);
-                }
-                //$("#tests").append(data.Tests);
-                //$.each(data.Tests, function (key, val) {
-                //    $(".one_test__name-" + key).html(val.Name);
-                //    console.log(val);
-                //});
+                fillingDivs(data);
             }
-
         });
-    }));
+    }
 
-    @*function ReturnTests(data) {
-        console.log(data);
-        @Html.Partial("~/Views/Test/_Test.cshtml", data)
-    }*@
+    function fillingDivs(data) {
+        $(".one_test").show();
+        for (var j = 0; j < @Model.PagingInfo.ItemsPerPage; j++) {
+            if (data.Tests[j] == null) {
+                $(".one_test-" + j).hide();
+                continue;
+            }
+            $(".one_test__name-" + j).text(data.Tests[j].Name);
+            $(".one_test__name-" + j).attr('href', '/Test/Preview/' + data.Tests[j].Id);
+            $(".one_test__description-" + j).text(data.Tests[j].Description);
+            $(".one_test__image-" + j).attr('src', data.Tests[j].Image);
+            $(".edit-" + j).attr('href', '/Test/Edit/' + data.Tests[j].Id);
+            $(".details-" + j).attr('href', '/Test/Details/' + data.Tests[j].Id);
+            $(".delete-" + j).attr('href', '/Test/Delete/' + data.Tests[j].Id);
+        }
+    }
+
+    $(document).ready(
+        $(".pager__number").click(function () {
+            // ??? key word
+            $.ajax({
+                url: '/Test/Index?keyWord=' + "" + '&page=' + $(this).attr("id"),
+                type: 'GET',
+                cache: false,
+                success: function (data) {
+                    fillingDivs(data);
+                }
+            });
+        })
+    );
+
+    //function ReturnTests(data) {
+    //    console.log(data);
+    //    fillingDivs(data);
+    //    $("#tests").text();
+    //}
 </script>
 
