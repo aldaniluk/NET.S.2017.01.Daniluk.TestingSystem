@@ -31,7 +31,8 @@ namespace WebApplication.Models.Test
         [DisplayName("Is test ready")]
         public bool IsReady { get; set; }
 
-        [DisplayName("Test image")]
-        public byte[] Image { get; set; }
+        //[DisplayName("Test image")]
+        //public byte[] Image { get; set; }
+        public string Image { get; set; }
     }
 }

@@ -1,7 +1,9 @@
-﻿@model IEnumerable<WebApplication.Models.Test.PreviewTestViewModel>
+﻿@model WebApplication.Models.Paging.TestPreviewPagingViewModel
 
 @using (Ajax.BeginForm("SearchTest", "Test",
-new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = InsertionMode.Replace }))
+new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = InsertionMode.Replace,
+    /*OnSuccess = "ReturnTests"*/
+}))
 {
     <div class="form-inline search_by_keyword">
         Search by key word:
@@ -19,5 +21,48 @@ new AjaxOptions { UpdateTargetId = "tests", HttpMethod = "GET", InsertionMode = 
 }
 
 <div id="tests" class="all_tests col-xs-12">
-    @Html.Partial("~/Views/Test/_Test.cshtml", Model)
+    @Html.Partial("~/Views/Test/_Test.cshtml", Model.Tests)
 </div>
+
+<div class="pager">
+    @Html.PageLinks(Model.PagingInfo, "pager__number")
+</div>
+
+
+<script type='text/javascript'>
+
+$(document).ready(
+    $(".pager__number").click(function () {
+        $.ajax({
+            url: '/Test/Index?page=' + $(this).attr("id"),
+            type: 'GET',
+            cache: false,
+            success: function (data) {
+                console.log(data);
+                for (var j = 0; j < @Model.PagingInfo.ItemsPerPage; j++) {
+                    if (data.Tests[j] == null)
+                        break; //?????????
+                    $(".one_test__name-" + j).text(data.Tests[j].Name);
+                    $(".one_test__name-" + j).attr('href', '/Test/Preview/' + data.Tests[j].Id);
+                    $(".one_test__description-" + j).text(data.Tests[j].Description);
+                    $(".image-" + j).attr('src', data.Tests[j].Image);
+                    $(".edit-" + j).attr('href', '/Test/Edit/' + data.Tests[j].Id);
+                    $(".details-" + j).attr('href', '/Test/Details/' + data.Tests[j].Id);
+                    $(".delete-" + j).attr('href', '/Test/Delete/' + data.Tests[j].Id);
+                }
+                //$("#tests").append(data.Tests);
+                //$.each(data.Tests, function (key, val) {
+                //    $(".one_test__name-" + key).html(val.Name);
+                //    console.log(val);
+                //});
+            }
+
+        });
+    }));
+
+    @*function ReturnTests(data) {
+        console.log(data);
+        @Html.Partial("~/Views/Test/_Test.cshtml", data)
+    }*@
+</script>
+

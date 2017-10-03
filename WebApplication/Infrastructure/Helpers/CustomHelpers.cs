@@ -4,6 +4,9 @@ using System;
 using WebApplication.Models.Answer;
 using WebApplication.Models.Test;
 using System.Web.Mvc.Html;
+using WebApplication.Models.Paging;
+using System.Text;
+using System.Globalization;
 
 namespace WebApplication.Infrastructure.Helpers
 {
@@ -22,6 +25,34 @@ namespace WebApplication.Infrastructure.Helpers
                 img.Attributes.Add("class", classes.ToString());
 
             return new MvcHtmlString(img.ToString());
+        }
+
+        //<ul class="pagination">
+        //<li class="page-item"><a class="page-link" href="#">Previous</a></li>
+
+        public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, string classes = null)
+        {
+            var result = new StringBuilder();
+            result.Append("<ul class=\"pager\">");
+            for (int i = 1; i <= pagingInfo.TotalPages; i++)
+            {
+                var li = new TagBuilder("li");
+                li.AddCssClass("page-item");
+
+                var tag = new TagBuilder("a");
+                tag.AddCssClass("page-link");
+                if (classes != null)
+                    tag.AddCssClass(classes);
+                tag.MergeAttribute("id", i.ToString());
+                tag.InnerHtml = i.ToString(CultureInfo.InvariantCulture);
+                if (i == pagingInfo.CurrentPage)
+                    tag.AddCssClass("active");
+
+                li.InnerHtml = tag.ToString();
+                result.Append(li);
+            }
+            result.Append("</ul>");
+            return MvcHtmlString.Create(result.ToString());
         }
     }
 }

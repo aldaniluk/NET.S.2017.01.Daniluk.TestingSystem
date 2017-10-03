@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WebApplication.Infrastructure.Mappers;
+using WebApplication.Models.Paging;
 using WebApplication.Models.Statistic;
 using WebApplication.Models.Test;
 
@@ -16,6 +17,7 @@ namespace WebApplication.Controllers
         private readonly IStatisticRepository statisticRepository;
         private readonly IUserRepository userRepository;
         private readonly IPassTestService passTestService;
+        public int PageSize = 3;
 
         public TestController(ITestRepository testRepository, IStatisticRepository statisticRepository, 
             IUserRepository userRepository, IPassTestService passTestService)
@@ -26,18 +28,58 @@ namespace WebApplication.Controllers
             this.passTestService = passTestService;
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int page = 1)
         {
-            IEnumerable<PreviewTestViewModel> tests;
-            if (User.IsInRole("admin"))
+            TestPreviewPagingViewModel pagingViewModel = new TestPreviewPagingViewModel
             {
-                tests = testRepository.GetAll().Select(t => t.ToPreviewTestViewModel());
-            }
-            else
+                Tests = User.IsInRole("admin") ?
+                    testRepository.GetAll().Skip((page - 1) * PageSize).Take(PageSize)
+                    .Select(t => t.ToPreviewTestViewModel()).ToList() :
+                    testRepository.GetAllReady().Skip((page - 1) * PageSize).Take(PageSize)
+                    .Select(t => t.ToPreviewTestViewModel()).ToList(),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = User.IsInRole("admin") ? 
+                        testRepository.GetAll().Count() : 
+                        testRepository.GetAllReady().Count()
+                },
+                CurrentKewWord = null
+            };
+            if (Request.IsAjaxRequest())
+                //return PartialView("_Test", pagingViewModel);
+                return Json(pagingViewModel, JsonRequestBehavior.AllowGet);
+            return View(pagingViewModel);
+        }
+
+        public ActionResult SearchTest(string keyWord = null, int page = 1) //////////
+        {
+            TestPreviewPagingViewModel pagingViewModel = new TestPreviewPagingViewModel
             {
-                tests = testRepository.GetAllReady().Select(t => t.ToPreviewTestViewModel());
-            }
-            return View(tests);
+                Tests = User.IsInRole("admin") ?
+                    testRepository.SearchAllTestsByKeyWord(keyWord).Skip((page - 1) * PageSize)
+                    .Take(PageSize).Select(t => t.ToPreviewTestViewModel()).ToList() :
+                    testRepository.SearchAllReadyTestsByKeyWord(keyWord).Skip((page - 1) * PageSize)
+                    .Take(PageSize).Select(t => t.ToPreviewTestViewModel()).ToList(),
+                PagingInfo = new PagingInfo
+                {
+                    CurrentPage = page,
+                    ItemsPerPage = PageSize,
+                    TotalItems = User.IsInRole("admin") ?
+                    testRepository.SearchAllTestsByKeyWord(keyWord).Count() :
+                    testRepository.SearchAllReadyTestsByKeyWord(keyWord).Count()
+                },
+                CurrentKewWord = keyWord
+            };
+            if (Request.IsAjaxRequest())
+                return PartialView("_Test", pagingViewModel);
+            return View(pagingViewModel);
+            
+            //if (Request.IsAjaxRequest())
+            //    return PartialView("_Test", tests); //json!!!!!!!!!!
+            //                                        //return Json(tests.ToList(), JsonRequestBehavior.AllowGet);
+            //return View("_Test", tests);
         }
 
         public ActionResult Preview(int id)
@@ -57,23 +99,6 @@ namespace WebApplication.Controllers
             }
             ViewBag.Message = message;
             return View(test);
-        }
-
-        public ActionResult SearchTest(string keyWord)
-        {
-            IEnumerable<PreviewTestViewModel> tests;
-            if (User.IsInRole("admin"))
-            {
-                tests = testRepository.SearchAllTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
-            }
-            else
-            {
-                tests = testRepository.SearchAllReadyTestsByKeyWord(keyWord).Select(t => t.ToPreviewTestViewModel());
-            }
-            if(Request.IsAjaxRequest())
-                return PartialView("_Test", tests); //json!!!!!!!!!!
-                //return Json(tests.ToList(), JsonRequestBehavior.AllowGet);
-            return View("_Test", tests);
         }
 
         [HttpGet]

@@ -131,6 +131,17 @@ textarea {
     font-size: 25px;
     padding: 10px 20px
 }
+.pager {
+    margin: 7px 0;
+}
+.pager > li {
+    overflow: auto;
+    background: red
+}
+.pager > li > a {
+    border-radius: 5px;
+    cursor: pointer
+}
 
 /*pass test*/
 .pass_test__header {
@@ -275,7 +286,8 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden
+    overflow: hidden;
+    margin-bottom: 10px;
 }
 .one_test__img > img {
     width: 100%;

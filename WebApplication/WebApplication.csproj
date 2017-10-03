@@ -179,6 +179,8 @@
     <Compile Include="Infrastructure\Mappers\UserMapper.cs" />
     <Compile Include="Infrastructure\NinjectDependencyResolver.cs" />
     <Compile Include="Models\Answer\AnswerViewModel.cs" />
+    <Compile Include="Models\Paging\PagingInfo.cs" />
+    <Compile Include="Models\Paging\TestPreviewPagingViewModel.cs" />
     <Compile Include="Models\Question\QuestionViewModel.cs" />
     <Compile Include="Models\Statistic\StatisticViewModel.cs" />
     <Compile Include="Models\Test\PassTestViewModel.cs" />

@@ -54,7 +54,7 @@ namespace WebApplication.Infrastructure.Mappers
                 QuestionQuantity = test.Questions.Count(),
                 UsersQuantity = statistics.Count(),
                 IsReady = test.IsReady,
-                Image = test.Image
+                Image = "/Test/GetImage/" + test.Id
             };
         }
 
