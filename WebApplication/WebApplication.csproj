@@ -260,6 +260,7 @@
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Oops.cshtml" />
+    <Content Include="Views\Test\_Pages.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Img\" />

@@ -27,11 +27,11 @@ namespace WebApplication.Infrastructure.Helpers
             return new MvcHtmlString(img.ToString());
         }
 
-        public static MvcHtmlString PageLinks(this HtmlHelper html, PagingInfo pagingInfo, string classes = null)
+        public static MvcHtmlString PageLinks(this HtmlHelper html, int totalPages, string classes = null)
         {
             var result = new StringBuilder();
             result.Append("<ul class=\"pager\">");
-            for (int i = 1; i <= pagingInfo.TotalPages; i++)
+            for (int i = 1; i <= totalPages; i++)
             {
                 var li = new TagBuilder("li");
                 li.AddCssClass("page-item");
@@ -42,8 +42,6 @@ namespace WebApplication.Infrastructure.Helpers
                     tag.AddCssClass(classes);
                 tag.MergeAttribute("id", i.ToString());
                 tag.InnerHtml = i.ToString(CultureInfo.InvariantCulture);
-                if (i == pagingInfo.CurrentPage)
-                    tag.AddCssClass("active");
 
                 li.InnerHtml = tag.ToString();
                 result.Append(li);
