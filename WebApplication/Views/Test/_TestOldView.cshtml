@@ -1,0 +1,26 @@
+﻿@* :( )*@
+
+@*@model int
+
+@for (int i = 0; i < Model; i++)
+{
+    <div class="one_test-container col-md-4 col-xm-12">
+        <div class="one_test one_test-@i">
+
+            <h2><a class = "one_test__name-@i"></a></h2>
+
+            <p class="one_test__description-@i"></p>
+
+            <div class="one_test__img">
+                <img class="one_test__image-@i" />
+            </div>
+
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", "Test", null, new { @class = "btn btn-default edit-" + i })
+                @Html.ActionLink("Details", "Details", "Test", null, new { @class = "btn btn-default details-" + i })
+                @Html.ActionLink("Delete", "Delete", "Test", null, new { @class = "btn btn-default delete-" + i })
+            }
+        </div>
+    </div>
+}*@

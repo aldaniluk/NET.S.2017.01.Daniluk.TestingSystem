@@ -27,27 +27,29 @@ namespace WebApplication.Infrastructure.Helpers
             return new MvcHtmlString(img.ToString());
         }
 
-        public static MvcHtmlString PageLinks(this HtmlHelper html, int totalPages, string classes = null)
-        {
-            var result = new StringBuilder();
-            result.Append("<ul class=\"pager\">");
-            for (int i = 1; i <= totalPages; i++)
-            {
-                var li = new TagBuilder("li");
-                li.AddCssClass("page-item");
+        //public static MvcHtmlString PageLinks(this HtmlHelper html, int totalPages, 
+        //    Func<int, string> pageUrl, string classes = null)
+        //{
+        //    var result = new StringBuilder();
+        //    result.Append("<ul class=\"pager\">");
+        //    for (int i = 1; i <= totalPages; i++)
+        //    {
+        //        var li = new TagBuilder("li");
+        //        li.AddCssClass("page-item");
 
-                var tag = new TagBuilder("a");
-                tag.AddCssClass("page-link");
-                if (classes != null)
-                    tag.AddCssClass(classes);
-                tag.MergeAttribute("id", i.ToString());
-                tag.InnerHtml = i.ToString(CultureInfo.InvariantCulture);
+        //        var tag = new TagBuilder("a");
+        //        tag.MergeAttribute("href", pageUrl(i));
+        //        tag.AddCssClass("page-link");
+        //        if (classes != null)
+        //            tag.AddCssClass(classes);
+        //        tag.MergeAttribute("id", i.ToString());
+        //        tag.InnerHtml = i.ToString(CultureInfo.InvariantCulture);
 
-                li.InnerHtml = tag.ToString();
-                result.Append(li);
-            }
-            result.Append("</ul>");
-            return MvcHtmlString.Create(result.ToString());
-        }
+        //        li.InnerHtml = tag.ToString();
+        //        result.Append(li);
+        //    }
+        //    result.Append("</ul>");
+        //    return MvcHtmlString.Create(result.ToString());
+        //}
     }
 }

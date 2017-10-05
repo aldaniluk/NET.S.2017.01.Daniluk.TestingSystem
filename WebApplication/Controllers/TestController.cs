@@ -25,7 +25,23 @@ namespace WebApplication.Controllers
             this.passTestService = passTestService;
         }
 
-        public ActionResult Index(int page = 1, string keyWord = "")
+        public ActionResult Index()
+        {
+            TestPreviewPagingViewModel pagingViewModel = GetTestPreviewPagingViewModel(1, "");
+            return View(pagingViewModel);
+        }
+
+        public ActionResult Search(int page = 1, string keyWord = "")
+        {
+            TestPreviewPagingViewModel pagingViewModel = GetTestPreviewPagingViewModel(page, keyWord);
+            if (Request.IsAjaxRequest())
+            {
+                return Json(pagingViewModel, JsonRequestBehavior.AllowGet);
+            }
+            return View("Index", pagingViewModel); 
+        }
+
+        private TestPreviewPagingViewModel GetTestPreviewPagingViewModel(int page, string keyWord)
         {
             PagingInfo pagingInfo = new PagingInfo
             {
@@ -35,25 +51,12 @@ namespace WebApplication.Controllers
                     testRepository.SearchAllTestsByKeyWord(keyWord).Count() :
                     testRepository.SearchAllReadyTestsByKeyWord(keyWord).Count()
             };
-
-            if (Request.IsAjaxRequest())
-            {
-                List<PreviewTestViewModel> tests = User.IsInRole("admin") ?
+            List<PreviewTestViewModel> tests = User.IsInRole("admin") ?
                     testRepository.SearchAllTestsByKeyWord(keyWord).Skip((page - 1) * PageSize).Take(PageSize)
                     .Select(t => t.ToPreviewTestViewModel()).ToList() :
                     testRepository.SearchAllReadyTestsByKeyWord(keyWord).Skip((page - 1) * PageSize).Take(PageSize)
                     .Select(t => t.ToPreviewTestViewModel()).ToList();
-
-                return Json(new TestPreviewPagingViewModel { PagingInfo = pagingInfo, Tests = tests },
-                    JsonRequestBehavior.AllowGet);
-            }
-            else
-                return View(new TestPreviewPagingViewModel { PagingInfo = pagingInfo, Tests = null });
-        }
-
-        public ActionResult GetPages(int totalPages)
-        {
-            return PartialView("_Pages", totalPages);
+            return new TestPreviewPagingViewModel { PagingInfo = pagingInfo, Tests = tests };
         }
 
         public ActionResult Preview(int id)

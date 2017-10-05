@@ -6,6 +6,7 @@ namespace WebApplication.Models.Paging
     public class TestPreviewPagingViewModel
     {
         public List<PreviewTestViewModel> Tests { get; set; }
-        public PagingInfo PagingInfo { get; set; }        
+        public PagingInfo PagingInfo { get; set; }   
+        //public string KeyWord { get; set; }
     }
 }

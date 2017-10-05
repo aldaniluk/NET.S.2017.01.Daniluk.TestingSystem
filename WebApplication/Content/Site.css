@@ -136,7 +136,6 @@ textarea {
 }
 .pager > li {
     overflow: auto;
-    background: red
 }
 .pager > li > a {
     border-radius: 5px;

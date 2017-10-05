@@ -219,6 +219,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\Paging.js" />
     <Content Include="Scripts\PassTest.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
@@ -255,12 +256,14 @@
     <Content Include="Views\Answer\DeleteAnswer.cshtml" />
     <Content Include="Views\Statistic\_Statistics.cshtml" />
     <Content Include="Views\Test\NotReadyTest.cshtml" />
-    <Content Include="Views\Test\_Test.cshtml" />
+    <Content Include="Views\Test\_TestOldView.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
     <Content Include="Views\Error\NotFound.cshtml" />
     <Content Include="Views\Error\Oops.cshtml" />
     <Content Include="Views\Test\_Pages.cshtml" />
+    <Content Include="Views\Test\_Tests.cshtml" />
+    <Content Include="Views\Test\IndexNotAjax.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Img\" />

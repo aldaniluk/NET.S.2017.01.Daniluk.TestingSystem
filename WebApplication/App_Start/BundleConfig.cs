@@ -23,6 +23,9 @@ namespace WebApplication
             bundles.Add(new ScriptBundle("~/bundles/passTest").Include(
                         "~/Scripts/PassTest.js"));
 
+            bundles.Add(new ScriptBundle("~/bundles/paging").Include(
+                        "~/Scripts/Paging.js"));
+
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at https://modernizr.com to pick only the tests you need.
             bundles.Add(new ScriptBundle("~/bundles/modernizr").Include(

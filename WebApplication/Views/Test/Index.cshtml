@@ -1,85 +1,24 @@
 ﻿@model WebApplication.Models.Paging.TestPreviewPagingViewModel
 
-@using (Ajax.BeginForm("Index", "Test",
-new AjaxOptions { HttpMethod = "GET", OnSuccess = "ReturnTests" }))
+@*@using (Ajax.BeginForm("Search", "Test", new AjaxOptions { HttpMethod = "GET", OnSuccess = "testsModule.returnTests" }))
 {
     <div class="form-inline search_by_keyword col-xs-12">
         <input class="form-control search_by_keyword__inp" name="keyWord" />
-        <input type="submit" value="Search" class="test_search_btn btn btn-default" id="search_by_keyword" />        
+        <input type="submit" value="Search" class="test_search_btn btn btn-default" id="search_by_keyword" />
         @if (User.IsInRole("admin"))
         {
-            @Html.ActionLink("Create new test", "Create", "Test", null,
-                new { @class = "btn btn-default" })
+            @Html.ActionLink("Create new test", "Create", "Test", null, new { @class = "btn btn-default" })
         }
     </div>
-}
+}*@ 
 
 <div id="tests" class="all_tests col-xs-12">
-    @Html.Partial("~/Views/Test/_Test.cshtml", Model.PagingInfo.ItemsPerPage)
+    @Html.Partial("~/Views/Test/_Tests.cshtml", Model.Tests)
 </div>
 
-<div class="pager_container"></div>
+<div class="pager_container">
+    @Html.Partial("~/Views/Test/_Pages.cshtml", Model)
+</div>
 
 
-<script type='text/javascript'>
-
-    initialFilling();
-    addingPages(@Model.PagingInfo.TotalPages);
-
-    function initialFilling() {
-        $.ajax({
-            url: '/Test/Index?page=1',
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                fillingDivs(data);
-            }
-        });
-    }
-
-    function addingPages(totalPages) {
-        $.ajax({
-            url: '/Test/GetPages?totalPages=' + totalPages,
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                $(".pager_container").html(data);
-            }
-        });
-    }
-
-    function fillingDivs(data) {
-        $(".one_test").show();
-        for (var j = 0; j < @Model.PagingInfo.ItemsPerPage; j++) {
-            if (data.Tests[j] == null) {
-                $(".one_test-" + j).hide();
-                continue;
-            }
-            $(".one_test__name-" + j).text(data.Tests[j].Name);
-            $(".one_test__name-" + j).attr('href', '/Test/Preview/' + data.Tests[j].Id);
-            $(".one_test__description-" + j).text(data.Tests[j].Description);
-            $(".one_test__image-" + j).attr('src', data.Tests[j].Image);
-            $(".edit-" + j).attr('href', '/Test/Edit/' + data.Tests[j].Id);
-            $(".details-" + j).attr('href', '/Test/Details/' + data.Tests[j].Id);
-            $(".delete-" + j).attr('href', '/Test/Delete/' + data.Tests[j].Id);
-        }
-    }
-
-    $(document).on("click", ".pager__number", function () {
-        var inputVal = $(".search_by_keyword__inp").val();
-        $.ajax({
-            url: '/Test?keyWord=' + inputVal + '&page=' + $(this).attr("id"),
-            type: 'GET',
-            cache: false,
-            success: function (data) {
-                fillingDivs(data);
-            }
-        });
-    });
-
-    function ReturnTests(data) {
-        fillingDivs(data);
-        addingPages(data.PagingInfo.TotalPages);
-    }
-</script>
-
+@Scripts.Render("~/bundles/paging")

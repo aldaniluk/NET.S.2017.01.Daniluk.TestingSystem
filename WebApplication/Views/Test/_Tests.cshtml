@@ -1,0 +1,28 @@
+﻿@model List<WebApplication.Models.Test.PreviewTestViewModel>
+
+@{ int counter = 0; }
+
+@foreach (var i in Model)
+{
+    <div class="one_test-container col-md-4 col-xm-12">
+        <div class="one_test one_test-@counter">
+
+            <h2><a class="one_test__name-@counter">@i.Name</a></h2>
+
+            <p class="one_test__description-@counter">@i.Description</p>
+
+            <div class="one_test__img">
+                <img class="one_test__image@counter" src="@i.Image" />
+            </div>
+
+            @if (User.IsInRole("admin"))
+            {
+                @Html.ActionLink("Edit", "Edit", "Test", new { id = @i.Id }, new { @class = "btn btn-default edit-" + counter })
+                @Html.ActionLink("Details", "Details", "Test", new { id = @i.Id }, new { @class = "btn btn-default details-" + counter })
+                @Html.ActionLink("Delete", "Delete", "Test", new { id = @i.Id }, new { @class = "btn btn-default delete-" + counter })
+            }
+        </div>
+    </div>
+
+    counter++;
+}
