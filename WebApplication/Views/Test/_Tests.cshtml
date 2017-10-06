@@ -12,7 +12,9 @@
             <p class="one_test__description-@counter">@i.Description</p>
 
             <div class="one_test__img">
-                <img class="one_test__image@counter" src="@i.Image" />
+                <a href="@i.Image" data-lightbox="tests-@counter" data-title="@i.Description" class="one_test__img__ligthbox-@counter">
+                    <img class="one_test__image one_test__image-@counter" src="@i.Image" />
+                </a>
             </div>
 
             @if (User.IsInRole("admin"))

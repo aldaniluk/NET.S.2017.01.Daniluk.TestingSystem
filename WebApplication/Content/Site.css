@@ -286,7 +286,7 @@ textarea {
     overflow: hidden;
     margin-bottom: 10px;
 }
-.one_test__img > img {
+.one_test__image {
     width: 100%;
     min-height: 100%;
     object-fit: cover;

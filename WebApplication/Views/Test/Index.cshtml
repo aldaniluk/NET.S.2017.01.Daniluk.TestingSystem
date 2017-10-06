@@ -1,16 +1,16 @@
 ﻿@model WebApplication.Models.Paging.TestPreviewPagingViewModel
 
-@*@using (Ajax.BeginForm("Search", "Test", new AjaxOptions { HttpMethod = "GET", OnSuccess = "testsModule.returnTests" }))
+@using (Ajax.BeginForm("Search", "Test", new AjaxOptions { HttpMethod = "GET", OnSuccess = "testsModule.returnTests" }))
 {
     <div class="form-inline search_by_keyword col-xs-12">
-        <input class="form-control search_by_keyword__inp" name="keyWord" />
-        <input type="submit" value="Search" class="test_search_btn btn btn-default" id="search_by_keyword" />
+        @*<input class="form-control search_by_keyword__inp" name="keyWord" />
+        <input type="submit" value="Search" class="test_search_btn btn btn-default" id="search_by_keyword" />*@
         @if (User.IsInRole("admin"))
         {
-            @Html.ActionLink("Create new test", "Create", "Test", null, new { @class = "btn btn-default" })
+        @:You can create a test >> @Html.ActionLink("Create new test", "Create", "Test", null, new { @class = "btn btn-default" })
         }
     </div>
-}*@ 
+}
 
 <div id="tests" class="all_tests col-xs-12">
     @Html.Partial("~/Views/Test/_Tests.cshtml", Model.Tests)
@@ -22,3 +22,4 @@
 
 
 @Scripts.Render("~/bundles/paging")
+@Scripts.Render("~/bundles/lightbox")

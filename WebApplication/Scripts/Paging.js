@@ -11,6 +11,7 @@
             $(".one_test__name-" + j).attr('href', '/Test/Preview/' + data.Tests[j].Id);
             $(".one_test__description-" + j).text(data.Tests[j].Description);
             $(".one_test__image-" + j).attr('src', data.Tests[j].Image);
+            $(".one_test__img__ligthbox-" + j).attr('href', data.Tests[j].Image);
             $(".edit-" + j).attr('href', '/Test/Edit/' + data.Tests[j].Id);
             $(".details-" + j).attr('href', '/Test/Details/' + data.Tests[j].Id);
             $(".delete-" + j).attr('href', '/Test/Delete/' + data.Tests[j].Id);
