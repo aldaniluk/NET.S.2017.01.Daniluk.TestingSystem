@@ -6,7 +6,7 @@
         <li class="page-item">
             @Ajax.ActionLink(i.ToString(), "Search", new { page = i }, 
             new AjaxOptions { HttpMethod = "GET", OnSuccess = "testsModule.returnTests" }, 
-            new { @class= "page-link", id = i })
+            new { @class= "page-link pager__link pager__link-" + i, id = i })
         </li>
     }
 </ul>

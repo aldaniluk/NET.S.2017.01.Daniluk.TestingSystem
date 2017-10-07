@@ -18,7 +18,9 @@ namespace WebApplication.Infrastructure.Mappers
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
                 IsReady = test.IsReady,
-                Questions = test.Questions.Select(q => q.ToQuestionViewModel()).ToList()
+                Questions = test.Questions.Select(q => q.ToQuestionViewModel()).ToList(),
+                Img = test.Img,
+                ImgSmall = test.ImgSmall
             };
         }
 
@@ -54,7 +56,8 @@ namespace WebApplication.Infrastructure.Mappers
                 QuestionQuantity = test.Questions.Count(),
                 UsersQuantity = statistics.Count(),
                 IsReady = test.IsReady,
-                Image = "/Test/GetImage/" + test.Id
+                Image = "/Test/GetImage/" + test.Id,
+                ImageSmall = "/Test/GetImageSmall/" + test.Id
             };
         }
 
@@ -67,7 +70,9 @@ namespace WebApplication.Infrastructure.Mappers
                 Name = test.Name,
                 MinPercentage = test.MinPercentage,
                 IsReady = test.IsReady,
-                Questions = test.Questions?.Select(q => q.ToQuestion()).ToList()
+                Questions = test.Questions?.Select(q => q.ToQuestion()).ToList(),
+                Img = test.Img,
+                ImgSmall = test.ImgSmall
             };
         }
 

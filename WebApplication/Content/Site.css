@@ -139,7 +139,11 @@ textarea {
 }
 .pager > li > a {
     border-radius: 5px;
-    cursor: pointer
+    cursor: pointer;
+    color: black
+}
+.selected {
+    background: #868a84 !important;
 }
 
 /*pass test*/
@@ -280,16 +284,13 @@ textarea {
 .one_test__img {
     width: 100%;
     height: 250px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
     margin-bottom: 10px;
 }
 .one_test__image {
-    width: 100%;
-    min-height: 100%;
     object-fit: cover;
+    height: 100%;
+    width: 100%;
+    /*max-width: 100%;*/
 }
 
 /*test perview*/
@@ -381,6 +382,12 @@ textarea {
     background: white;
     overflow: auto;
     overflow-x: hidden;
+}
+.edit_test__img {
+    overflow: auto;
+}
+.edit_test__img > img {
+    max-height: 200px;
 }
 
 /*delete test*/

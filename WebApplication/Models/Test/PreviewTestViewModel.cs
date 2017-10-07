@@ -34,5 +34,6 @@ namespace WebApplication.Models.Test
         //[DisplayName("Test image")]
         //public byte[] Image { get; set; }
         public string Image { get; set; }
+        public string ImageSmall { get; set; }
     }
 }

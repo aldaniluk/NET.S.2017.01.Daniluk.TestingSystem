@@ -1,6 +1,10 @@
 ﻿using Domain.Abstract;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 using WebApplication.Infrastructure.Mappers;
 using WebApplication.Models.Paging;
@@ -103,7 +107,17 @@ namespace WebApplication.Controllers
 
         public ActionResult GetImage(int id)
         {
-            byte[] image = testRepository.GetById(id).Image;
+            byte[] image = testRepository.GetById(id).Img;
+            if (image == null || image?.Length == 0)
+            {
+                return null;
+            }
+            return File(image, "image/jpg");
+        }
+
+        public ActionResult GetImageSmall(int id)
+        {
+            byte[] image = testRepository.GetById(id).ImgSmall;
             if (image == null || image?.Length == 0)
             {
                 return null;
@@ -122,8 +136,15 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ActionName("Create")]
-        public ActionResult Created(TestViewModel test)
+        public ActionResult Created(TestViewModel test, HttpPostedFileBase file)
         {
+            if (file != null && file?.ContentLength != 0)
+            {
+                test.Img = new byte[file.ContentLength];
+                test.ImgSmall = new byte[file.ContentLength];
+                file.InputStream.Read(test.Img, 0, file.ContentLength);
+                test.ImgSmall = ResizeImage(test.Img);
+            }
             if (ModelState.IsValid)
             {
                 testRepository.Create(test.ToTest());
@@ -144,14 +165,46 @@ namespace WebApplication.Controllers
         [HttpPost]
         [Authorize(Roles = "admin")]
         [ActionName("Edit")]
-        public ActionResult Edited(TestViewModel test)
+        public ActionResult Edited(TestViewModel test, HttpPostedFileBase file)
         {
             if (ModelState.IsValid)
             {
+                if (file != null && file?.ContentLength != 0)
+                {
+                    test.Img = new byte[file.ContentLength];
+                    test.ImgSmall = new byte[file.ContentLength];
+                    file.InputStream.Read(test.Img, 0, file.ContentLength);
+                    test.ImgSmall = ResizeImage(test.Img);
+                }
                 testRepository.Update(test.ToTest());
                 return RedirectToAction("Details", "Test", new { id = test.Id });
             }
             return View("EditTest", test);
+        }
+
+        private static byte[] ResizeImage(byte[] img)
+        {
+            int largestSide = 300;
+            var bigImg = new Bitmap(new MemoryStream(img));
+            int width = bigImg.Width;
+            int height = bigImg.Height;
+            double scale;
+            if(width < height)
+            {
+                scale = (double)largestSide / height;
+                height = largestSide;
+                width = (int)(scale * width);
+            }
+            else
+            {
+                scale = (double)largestSide / width;
+                width = largestSide;
+                height = (int)(scale * height);
+            }
+
+            var smallImg = new Bitmap(bigImg, new Size(width, height));
+            var converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(smallImg, typeof(byte[]));
         }
 
         [HttpGet]

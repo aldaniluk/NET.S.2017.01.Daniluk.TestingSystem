@@ -30,6 +30,11 @@ namespace WebApplication.Models.Test
         [DisplayName("Is this test ready?")]
         public bool IsReady { get; set; }
 
+        [DisplayName("Image of the test")]
+        public byte[] Img { get; set; }
+
+        public byte[] ImgSmall { get; set; }
+
         public List<QuestionViewModel> Questions { get; set; }
 
     }

@@ -27,7 +27,9 @@ namespace Domain.Entities
 
         public bool IsReady { get; set; }
 
-        public byte[] Image { get; set; }
+        public byte[] Img { get; set; }
+
+        public byte[] ImgSmall { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Question> Questions { get; set; }
